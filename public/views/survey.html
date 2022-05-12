@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Survey</title>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="/style.css">  
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  </head>
+  <body>
+    <ul id="NAVul">
+      <li id='NAVli'><a  href="/">Home</a></li>
+      <li id='NAVli'><a href="/profile">Profile</a></li>
+      <li id='NAVli'><a class="active" href="/survey">Survey</a></li>
+      </ul>
+    <form>
+      Username: <input type="text" id="tempUser">
+      Password: <input id="password" type="password" name="password">
+      <input type="checkbox" onclick="showPassword()">Show Password
+      <br><br>
+
+      <fieldset>
+        <legend>Survey Questions</legend>
+        <ul id='messages'></ul>
+
+        <!--- <br><label>1. Who does Mr Yee invite as a guest for halloween?</label> <br>
+        <input type="radio" id="1" name="q1" value="Fred">
+        <label for="type">1</label>
+        <input type="radio" id="2" name="q1" value="I never had fall term with Mr Yee">
+        <label for="type">2</label>
+        <input type="radio" id="3" name="q1" value="CS Man (Superhero)">
+        <label for="type">3</label>
+        <input type="radio" id="4" name="q1" value="Yoda">
+        <label for="type">4</label>
+            <br><br><br>
+        <label>2. Which University did Mr Yee attend?</label> <br>
+        <input type="radio" id="2" name="q2" value="UC San Marcos">
+        <label for="type">2</label>
+        <input type="radio" id="4" name="q2" value="Brown University">
+        <label for="type">4</label>
+        <input type="radio" id="1" name="q2" value="Stanford University">
+        <label for="type">1</label>
+        <input type="radio" id="3" name="q2" value="Blue University">
+        <label for="type">3</label>
+            <br><br><br>
+        <label>3. What name does Mr Yee commonly give Javascript objects?</label> <br>
+        <input type="radio" id="4" name="q3" value="Fred">
+        <label for="type">4</label>
+        <input type="radio" id="1" name="q3" value="Ron">
+        <label for="type">1</label>
+        <input type="radio" id="3" name="q3" value="Annie">
+        <label for="type">3</label>
+        <input type="radio" id="2" name="q3" value="Joe">
+        <label for="type">2</label>
+            <br><br><br>
+        <label>4. How good is beef?</label> <br>
+        <input type="radio" id="1" name="q4" value="1">
+        <label for="type">1</label>
+        <input type="radio" id="4" name="q4" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="3" name="q4" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="4" name="q4" value="4">
+        <label for="type">4</label>
+            <br><br><br>
+        <label>5. How good is chicken?</label> <br>
+        <input type="radio" id="4" name="q5" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="3" name="q5" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="2" name="q5" value="2">
+        <label for="type">2</label>
+        <input type="radio" id="1" name="q5" value="1">
+        <label for="type">1</label>
+            <br><br><br>
+        <label>6. How good is pork?</label> <br>
+        <input type="radio" id="1" name="q6" value="1">
+        <label for="type">1</label>
+        <input type="radio" id="2" name="q6" value="2">
+        <label for="type">2</label>
+        <input type="radio" id="3" name="q6" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="4" name="q6" value="4">
+        <label for="type">4</label>
+            <br><br><br>
+        <label>7. How much do you like food?</label> <br>
+        <input type="radio" id="3" name="q7" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="2" name="q7" value="2">
+        <label for="type">2</label>
+        <input type="radio" id="4" name="q7" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="1" name="q7" value="1">
+        <label for="type">1</label>
+            <br><br><br>
+        <label>8. How often do you eat?</label> <br>
+        <input type="radio" id="1" name="q8" value="1">
+        <label for="type">1</label>
+        <input type="radio" id="4" name="q8" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="3" name="q8" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="2" name="q8" value="2">
+        <label for="type">2</label>
+            <br><br><br>
+        <label>9. Where do you eat?</label> <br>
+        <input type="radio" id="3" name="q9" value="3">
+        <label for="type">3</label>
+        <input type="radio" id="4" name="q9" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="1" name="q9" value="1">
+        <label for="type">1</label>
+        <input type="radio" id="2" name="q9" value="2">
+        <label for="type">2</label>
+            <br><br><br>
+        <label>10. Who do you eat with?</label> <br>
+        <input type="radio" id="2" name="q10" value="2">
+        <label for="type">2</label>
+        <input type="radio" id="4" name="q10" value="4">
+        <label for="type">4</label>
+        <input type="radio" id="1" name="q10" value="1">
+        <label for="type">1</label>
+        <input type="radio" id="3" name="q10" value="3">
+        <label for="type">3</label> -->
+
+      </fieldset>
+      <br>
+      <input class="button" id="submitButton" type="button" value="Submit Survey" />
+      <input class="button" type="reset" name="reset" value="Clear Survey">
+
+    </form>
+    <script src="js/randomizeSurvey.js"></script>
+    <script src="js/survey.js"></script>
+
+  </body>
+</html>
