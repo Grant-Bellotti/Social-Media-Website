@@ -14,33 +14,25 @@
     <ul id="NAVul">
     <li id='NAVli'><a  href="/">Home</a></li>
     <li id='NAVli'><a class="active" href="/profile">Profile</a></li>
-    <li id='NAVli'><a href="/survey">Survey</a></li>
-
+    <!-- <li id='NAVli'><a href="/survey">Survey</a></li> -->
     </ul>
 
-    <h1>Create and Edit Profile</h1>
+    <h1 id="session">Edit Profile: </h1>
     <form>
       <fieldset>
         <legend>Profile information</legend>
 
-        <label for="username">Username:</label>
-        <input id="username" type="text" name="username">
-
         <form id="fileupload">
 
-        <label for="uploader">Upload Profile Picture:</label>
-        <input id="uploader" type="file" name="image">
-        <img id="display" src="images/empty.webp" alt="" height="50" width="50">
+        <label for="uploader">Upload New Profile Picture:</label>
+        <input id="uploader" type="file" name="image"> <br><br>
+        <img id="display" src="images/empty.webp" alt="" height="100" width="100">
         <br>
-        <label for="password">Password:</label>
-        <input id="password" type="password" name="password">
-        <br>
-        <input type="checkbox" onclick="showPassword()">Show Password
 
       </fieldset>
       <br>
-      <input class="button" onclick=setAction("Create") type="submit" value="Create Account">
       <input class="button" onclick=setAction("Update") type="submit" value="Update Account">
+      <input id="logout" class="button" type="button" value="Logout" onclick="logoutClicked()"/>
       </form>
 
     </form>

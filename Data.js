@@ -1,8 +1,7 @@
-let Data = function(username,profilepic,rating,password) {
-    this.username = username;
-    this.profilepic = profilepic;
-    this.rating = rating;
-    this.password = password;
+let Data = function(name,picture,yeescore) {
+    this.name = name;
+    this.picture = picture;
+    this.yeescore = yeescore;
 }
 
 module.exports = Data;

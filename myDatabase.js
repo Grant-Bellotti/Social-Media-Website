@@ -1,59 +1,80 @@
+var express = require("express");
+var mongoose = require("mongoose");
+var DataModel = require("./models/userData");
 const Data = require('./Data');
 
 let myDatabase = function() {
-    this.data = [];
 }
 
-let dataIndex = 0;
 
-myDatabase.prototype.displayData = function() {
-    for (let i=0;i<this.data.length;i++) {
-        console.log(this.data[i]);
-    }
+
+myDatabase.prototype.postData = function(data,res) {
+//  let obj = {ident:data.ident,name:data.name};
+console.log(data.name + data.name);
+  let obj = {name:data.name,picture:data.picture,yeescore:data.yeescore};   //added
+  DataModel.create(obj,function(error,info) {
+      if (error) {
+          return res.json({error:true});
+      }
+      return res.json({error:false});
+  });
 }
 
-myDatabase.prototype.postData = function(_data) {
-  for (let i=0;i<this.data.length;i++) {
-    if (this.data[i] && this.data[i].username == _data.username) {
-      return false;
+myDatabase.prototype.getData = function(name,res) {
+
+  DataModel.find({name:name},function(error,info) {
+      if (error) {
+          return res.json({error:true});
+      }
+      else if (info == null) {
+          return res.json({error:true});
+      }
+
+      if (info.length == 1)
+          return res.json({error:false,name:info[0].name,picture:info[0].picture,yeescore:info[0].yeescore});
+      else
+          return res.json({error:true});
+   });
+}
+
+myDatabase.prototype.putData = function(data,res) {
+  DataModel.findOneAndUpdate({name:data.name},{picture:data.picture},function(error,oldData) {
+    if (error) {
+      return res.json({error:true});
     }
+    else if (oldData == null) {
+      return res.json({error:true});
+    }
+    return res.json({error:false});
+  });
+}
+
+myDatabase.prototype.putYeescore = function(data,res) {
+  if(data.yeescore > -1) {
+    DataModel.findOneAndUpdate({name:data.name},{yeescore:data.yeescore},function(error,oldData) {
+      if (error) {
+        return res.json({error:true});
+      }
+      else if (oldData == null) {
+        return res.json({error:true});
+      }
+      return res.json({error:false});
+    });
   }
-  this.data[dataIndex++] =
-  new Data(_data.username,_data.profilepic,_data.rating,_data.password);
-  return true;
+  else {
+    return res.json({error:true});
+  }
 }
 
-myDatabase.prototype.getData = function(username,password) {
-  for (let i=0;i<this.data.length;i++) {
-    if (this.data[i] && username == this.data[i].username && password == this.data[i].password)
-    {
-      return(new Data(this.data[i].username,this.data[i].profilepic,
-                      this.data[i].rating, null));
-    }
-  }
-  return null;
-}
-
-myDatabase.prototype.putData = function(_data) {
-  for (let i=0;i<this.data.length;i++) {
-    if (this.data[i] && this.data[i].username == _data.username && _data.password == this.data[i].password) {
-      this.data[i] =
-      new Data(_data.username,_data.profilepic,_data.rating,this.data[i].password);
-      return true;
-    }
-  }
-  return false;
-}
-
-myDatabase.prototype.deleteData = function(id) {
-  for (let i=0;i<this.data.length;i++) {
-    if (this.data[i] && username == this.data[i].username) {
-        let tempPtr = this.data[i];
-        this.data[i] = undefined;
-        return tempPtr;
-    }
-  }
-  return null;
+myDatabase.prototype.deleteData = function(ident,res) {
+    DataModel.remove({name:name},function(error,removed) {
+        if (error) {
+            return res.json({error:true});
+        }
+        if (removed.result.n == 0)
+            return res.json({error:true});
+        return res.json({error:false});
+    });
 }
 
 module.exports = myDatabase;

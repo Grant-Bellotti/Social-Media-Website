@@ -2,6 +2,7 @@ let path = require("path");
 let express = require("express");
 var formidable = require('formidable');
 var mv = require('mv');
+var passport = require("passport");
 
 //Look at below web page for info on express.Router()
 //https://scotch.io/tutorials/learn-to-use-the-new-router-in-expressjs-4
@@ -10,21 +11,99 @@ let router = express.Router();
 //request is info sending to server from client.
 //response is info sending to client from server.
 
+router.use(function(req, res, next) {
+  res.locals.currentUserjy = req.user;
+  res.locals.errors = req.flash("error");
+  res.locals.infos = req.flash("info");
+  next();
+});
+
+//////////////////////////////////////////////////////
+
+router.get("/successroot", function(req, res) {
+  res.json({redirect:"/"});
+});
+router.get("/failroot", function(req, res) {
+  res.json({redirect:"/"});
+});
+router.get("/successsignup", function(req, res) {
+  res.json({redirect:"/profile"});
+});
+router.get("/failsignup", function(req, res) {
+  res.json({redirect:"/profileLogin"});
+});
+router.get("/successlogin", function(req, res) {
+  res.json({redirect:"/profile"});
+});
+router.get("/faillogin", function(req, res) {
+  res.json({redirect:"/profileLogin"});
+});
+
+///////////////////////////////////////////////
+
 router.get("/",function(req,res){
   res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
 });
 router.get("/profile",function(req,res){
-  res.sendFile(path.resolve(__dirname + "/public/views/profile.html"));  //changed
+  let thePath;
+  if (req.isAuthenticated()) {
+    thePath = path.resolve(__dirname + "/public/views/profile.html");
+    res.sendFile(thePath);
+  } else {
+    thePath = path.resolve(__dirname + "/public/views/profileLogin.html");
+    res.sendFile(thePath);
+  }
+});
+router.get("/signup", function(req, res) {
+  let thePath = path.resolve(__dirname,"public/views/signup.html");
+  res.sendFile(thePath);
+});
+router.get("/profileLogin",function(req,res){
+  res.sendFile(path.resolve(__dirname + "/public/views/profileLogin.html"));  //changed
 });
 router.get("/survey",function(req,res){
-  res.sendFile(path.resolve(__dirname + "/public/views/survey.html"));  //changed
+  let thePath;
+  if (req.isAuthenticated()) {
+    thePath = path.resolve(__dirname + "/public/views/survey.html");
+    res.sendFile(thePath);
+  } else {
+    res.json({redirect:"/profileLogin"});
+  }
 });
+/*
 router.get("/yeeside",function(req,res){
   res.sendFile(path.resolve(__dirname + "/public/views/yeelogin.html"));  //changed
 });
 router.get("/yeeview",function(req,res){
   res.sendFile(path.resolve(__dirname + "/public/views/yeeview.html"));  //changed
 });
+*/
+router.get("/userInfo",function(req,res){
+  if (req.isAuthenticated()) {
+    console.log("req isAuthenticated");
+    res.json({username:req.user.username});
+  }
+  else {
+    console.log("req is not Authenticated");
+    res.json(null);
+  }
+});
+router.get("/logout", function(req, res) {
+  if (req.isAuthenticated()) {
+    console.log("logout successful");
+    req.logout();
+    res.redirect("/successroot");
+  } else {
+    res.redirect("/failroot");
+  }
+});
+router.post("/login", passport.authenticate("login", {
+  successRedirect: "/successlogin",
+  failureRedirect: "/faillogin",
+  failureFlash: true
+}));
+
+/////////////////////////////////////////////////
 
 const myDatabase = require('./myDatabase');
 let db = new myDatabase();
@@ -38,13 +117,7 @@ const Data = require('./Data');
 const MessageData = require('./message');
 let messageID = 1;
 let filename2;
-/////Dummy Account for tests//////
-{
-let obj = new Data('abc','empty.webp',-1,'abc');
-db.postData(obj);
-let obj2 = new Data('Grant','empty.webp',-1,'abc');
-db.postData(obj2);
-}
+
 //////////////////////////////////
 router.post('/fileupload', function(req, res) {
     console.log("router.post fileupload");
@@ -164,104 +237,6 @@ router.get('/getstoredMessages', function(req, res){
 });
 router.get('/getMessageid', function(req, res){
   res.json(messageID);
-
-});
-/////Checks Login Info//////
-router.get('/check', function(req, res){
-  let username = req.query.username.trim();
-  let password = req.query.password.trim();
-
-  if (username == "") {
-    res.json({error:true,message:"Username is required"});
-    return;
-  }
-  if (password == "") {
-          res.json({error:true,message:"Password is required"});
-      return;
-  }
-  let val = db.getData(username,password);
-    if (val == null)
-        res.json({error:true,message:'Incorrect username or password'});
-    else
-    {
-      res.json({error:false});
-    }
-});
-
-router.post('/create', function(req, res){
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-  filename2 = req.body.filename2.trim();
-
-  if (username == "") {
-      res.json({error:true,message:"Username is required"});
-      return;
-  }
-  if (password == "") {
-      res.json({error:true,message:"Password is required"});
-      return;
-  }
-  if (filename2 == "") {
-      filename2 = "images/empty.webp";
-  }
-
-  let obj = new Data(username,filename2,(-1),password); //the -1 is temporary, is the yee rating
-  let val = db.postData(obj);
-  if (val)
-    res.json({error:false,filename2:filename2});
-  else
-    res.json({error:true});
-
-});
-router.put('/update', function(req, res){
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-  filename2 = req.body.filename2.trim();
-
-  if (username == "") {
-      res.json({error:true,message:"Username is required"});
-      return;
-  }
-  if (password == "") {
-      res.json({error:true,message:"Password is required"});
-      return;
-  }
-  if (filename2 == "") {
-      filename2 = "images/empty.webp";
-  }
-
-  let obj = new Data(username,filename2,(db.getData(username,password).rating),password); //the -1 is temporary, is the yee rating
-  let val = db.putData(obj);
-  if (val)
-    res.json({error:false,filename2:filename2});
-  else
-    res.json({error:true,message:"Incorrect username or password"});
-
-});
-router.post('/surveySubmit', function(req, res){
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-  let num = parseInt(req.body.surveyNumber);
-
-  if (db.getData(username,password) && db.getData(username,password).rating >= 0) {
-    res.json({error:true,message:"the survey has already been taken on this account"});
-    return;
-  }
-  let done = false;
-  for(let i=10; i>0; i--) {
-    if(num >= (4*i) && !done) {
-      num = i;
-      done = true;
-    }
-  }
-  console.log("Yee survey num: "+num);
-  let tempData = db.getData(username,password);
-  let obj = new Data(username,tempData.profilepic,num,password); //the 5 is temporary, is the yee rating
-  let val = db.putData(obj);
-  if (val)
-    res.json({error:false,num:num});
-  else
-    res.json({error:true,message:"Incorrect username or password"});
 
 });
 

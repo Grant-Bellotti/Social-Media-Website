@@ -21,7 +21,6 @@ socket.on('welcome', function(data) {
    data: {'id':0},
    success: function(data2){
      storedMessages = data2.test;
-     console.log(data2.test);
      $("#messages").append(storedMessages);
      for(let i =1; i<=data2.IDs;i++) {
       collapseIt(i);
@@ -29,7 +28,6 @@ socket.on('welcome', function(data) {
    } ,
    dataType: "json"
   });
-
 });
 
 //Get message from server.
@@ -114,134 +112,88 @@ function getRandomColor() {
   return color;
 
 }
-/*
-function doit() {
-//Send message to server.
-      msg = $('#postT').val();
-      user = $('#tempUser').val();
-      pw = $('#password').val();
-      color = getRandomColor()
-          $.ajax({
-            url: "/check",
-            type: "GET",
-            data: {username:user,password:pw},
-            success: function(data){
-                if (data.error){
-                  alert(data.message);
-                }
-                else {
-                	socket.emit('update', {'msg': msg,'user':user,'color':color});
-                }
-              } ,
-            dataType: "json"
-          });
-
-      return false;
-}
-*/
-
-
 
 function uploadSuccess(data) {
-  let type = $("input:radio[name='type']:checked").val();
-  let user = $('#tempUser').val();
-  let pw = $('#password').val();
-  let msg = "";
-
-
-  let bodyMSG = ''
-  let color = getRandomColor()
-  if (data.error)
-  {
+  if (data.error) {
     alert(data.message);
     return;
   }
+  $.get("/checkAuthenticated",function(info){
+    if(info.error) {
+      alert(info.message);
+      return false;
+    } else {
+      let type = $("input:radio[name='type']:checked").val();
+      let user = info.user;
+      let msg = "";
+      let bodyMSG = ''
+      let color = getRandomColor()
 
-  $.ajax({
-    url: "/check",
-    type: "GET",
-    data: {username:user,password:pw},
-    success: function(data2){
-      if (data2.error){
-        alert(data2.message);
+      if (type == "Text") {
+        msg = $('#postT').val();
+        bodyMSG = $('#postC').val();
+
+        if(msg == "") {
+          alert ("title is required");
+          return;
+        }
+        else if(bodyMSG == "") {
+          alert ("message is required");
+          return;
+        }
+
       }
-      else {
-        if (type == "Text") {
-          msg = $('#postT').val();
-          bodyMSG = $('#postC').val();
+      else if (type == "Image") {
+        msg = data.filename2;
 
-          if(msg == "") {
-            alert ("title is required");
-            return;
-          }
-          else if(bodyMSG == "") {
-            alert ("message is required");
-            return;
-          }
-
+        if(msg == "empty.webp") {
+          alert ("image is required");
+          return;
         }
-        else if (type == "Image") {
-          msg = data.filename2;
+      }
 
-          if(msg == "empty.webp") {
-            alert ("image is required");
-            return;
-          }
+      $.ajax({
+        url: "/storeMessage",
+        type: "POST",
+        data: {message:msg,id:messageid,user:user,type:type,color:color,comments:"",realMessage:bodyMSG},
+        success: function(data){
 
-        }
+        } ,
+        dataType: "json"
+      });
+      socket.emit('update', {'type':type, 'msg': msg,'user':user,'color':color,'bodyMSG':bodyMSG});
+      $('#postT').val("");
+      $('#postC').val("");
+      $('#uploader').val("");
+    }
+  });
+}
 
+function commentit(id){
+  let text = $("#"+"t"+id).val();
+  if(text != "") {
+    $.get("/checkAuthenticated",function(info){
+      if(info.error) {
+        alert(info.message);
+        return false;
+      } else {
+        let user = info.user;
         $.ajax({
-          url: "/storeMessage",
+          url: "/storeComment",
           type: "POST",
-          data: {message:msg,id:messageid,user:user,type:type,color:color,comments:"",realMessage:bodyMSG},
+          data: {text: text,messageID:id,user:user},
           success: function(data){
 
           } ,
           dataType: "json"
         });
-        socket.emit('update', {'type':type, 'msg': msg,'user':user,'color':color,'bodyMSG':bodyMSG});
-        $('#postT').val("");
-        $('#postC').val("");
-        $('#uploader').val("");
-      }
-    } ,
-    dataType: "json"
-  });
-}
-
-function commentit(id){
-let text = $("#"+"t"+id).val();
-let user =  $('#tempUser').val();
-let pw = $('#password').val();
-if(text != ""){
-  $.ajax({
-    url: "/check",
-    type: "GET",
-    data: {username:user,password:pw},
-    success: function(data){
-      if (data.error){
-        alert(data.message);
-      }
-      else {
-        $.ajax({
-              url: "/storeComment",
-              type: "POST",
-              data: {text: text,messageID:id,user:user},
-              success: function(data){
-
-
-              } ,
-              dataType: "json"
-            });
         socket.emit('updateComments', {'text': text,'messageID':id,'user': user});
         $("#"+"t"+id).val("");
       }
-    } ,
-    dataType: "json"
-  });
-}
-else
-  alert("you need a message");
+    });
+  }
+  else
+    alert("you need a message");
 }
 
 function collapseIt(messageID){
@@ -284,4 +236,9 @@ $(document).ready(function(){
     return false;
   });
   changeView();
+
+  $.get("/getInfo",function(data){
+    $("#session").html("Welcome, " + data.name);
+
+  });
 });
