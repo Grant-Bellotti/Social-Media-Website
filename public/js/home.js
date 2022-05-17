@@ -16,34 +16,31 @@ $.ajax({
 socket.on('welcome', function(data) {
   let storedMessages = "4455";
   $.ajax({
-   url: "/getstoredMessages",
-   type: "GET",
-   data: {'id':0},
-   success: function(data2){
-     
-
-                              if(data2.IDs > 1){
-                                 storedMessages = data2.test;
-                                 console.log(data2.test);
-                                 $("#messages").append(storedMessages);
-                                 for(let i =2; i<=data2.IDs;i++) {
-                                  collapseIt(i);
-                                 }
-                               }
-                                  let newID = data2.IDs +1;
-                                  messageid = newID;
-                                  $.ajax({
-                                url: "/setmessageid",
-                                type: "POST",
-                                data: {'ID':newID},
-                                success: function(data){
-                                  console.log(data);
-                                } ,
-                                dataType: "json"
-                                       });
-
-   } ,
-   dataType: "json"
+    url: "/getstoredMessages",
+    type: "GET",
+    data: {'id':0},
+    success: function(data2){
+      if(data2.IDs > 1){
+      storedMessages = data2.test;
+      console.log(data2.test);
+      $("#messages").append(storedMessages);
+      for(let i =2; i<=data2.IDs;i++) {
+        collapseIt(i);
+      }
+    }
+    let newID = data2.IDs +1;
+    messageid = newID;
+    $.ajax({
+      url: "/setmessageid",
+      type: "POST",
+      data: {'ID':newID},
+      success: function(data){
+        console.log(data);
+      } ,
+      dataType: "json"
+    });
+  } ,
+  dataType: "json"
   });
 });
 
@@ -99,9 +96,7 @@ $.ajax({
    });
 });
 
-
-socket.on('updateComments',(data) =>
-{
+socket.on('updateComments',(data) => {
   $("#"+"p"+data.messageID).append("<p> "+ data.user + ": " + data.text +  " <p>");
 });
 
@@ -195,40 +190,34 @@ function commentit(id){
         return false;
       } else {
         let user = info.user;
-         $.ajax({
-              url: "/getData",
-              type: "GET",
-             data: {messageID:id},
-              success: function(data){
+        $.ajax({
+          url: "/getData",
+          type: "GET",
+          data: {messageID:id},
+          success: function(data){
+            let oldComment = data.comments;
+            console.log(oldComment);
+            $.ajax({
+              url: "/storeComment",
+              type: "POST",
+             data: {text: text,messageID:id,user:user,oldComment:oldComment},
+              success: function(data2){
 
-                let oldComment = data.comments;
-                console.log(oldComment);
-                           $.ajax({
-                        url: "/storeComment",
-                        type: "POST",
-                       data: {text: text,messageID:id,user:user,oldComment:oldComment},
-                        success: function(data2){
-
-
-                        } ,
-                        dataType: "json"
-                      });
               } ,
               dataType: "json"
             });
+          } ,
+          dataType: "json"
+        });
        socket.emit("updateComments",{"text":text,"messageID":id,"user":user})
        $("#t" + id).val("");
       }
     });
   }
-
 }
 
-
-
 function collapseIt(messageID){
-var coll = document.getElementById(messageID);
-
+  var coll = document.getElementById(messageID);
   coll.addEventListener("click", function() {
     this.classList.toggle("active");
     var content = this.nextElementSibling;
@@ -238,7 +227,6 @@ var coll = document.getElementById(messageID);
       content.style.display = "block";
     }
   });
-
 }
 
 function showPassword() {
@@ -250,6 +238,7 @@ function showPassword() {
     input.type = "password";
   }
 }
+
 $(document).ready(function(){
   $("form").submit(function(event) {
     let data = new FormData($(this)[0]);
