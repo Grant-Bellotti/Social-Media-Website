@@ -258,7 +258,7 @@ $(document).ready(function(){
 
   $.get("/getInfo",function(data){
     if(data)
-    $("#session").html("Welcome, " + data.name);
+      $("#session").html("Welcome, " + data.name);
 
   });
 });

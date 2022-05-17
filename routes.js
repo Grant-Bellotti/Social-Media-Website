@@ -67,7 +67,8 @@ router.get("/survey",function(req,res){
     thePath = path.resolve(__dirname + "/public/views/survey.html");
     res.sendFile(thePath);
   } else {
-    res.json({redirect:"/profileLogin"});
+    thePath = path.resolve(__dirname + "/public/views/profileLogin.html");
+    res.sendFile(thePath);
   }
 });
 /*
@@ -184,7 +185,7 @@ return(messageDb.getData(req.query.messageID,res))
 });
 
 router.get('/getstoredMessages', function(req, res){
-  
+
 return(messageDb.getAllData(res));
 
 });

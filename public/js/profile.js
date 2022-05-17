@@ -35,6 +35,9 @@ $(document).ready(function(){
   $.get("/getInfo",function(data){
     $("#session").html("Edit Profile: " + data.name);
     display.src = "images/" + data.picture;
+    if(data.yeescore > -1) {
+      $("#yeescore").html("Yee Survey Score: " + data.yeescore);
+    }
 
   });
 

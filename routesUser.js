@@ -96,30 +96,12 @@ router.put('/update', function(req, res){
 
 });
 router.post('/surveySubmit', function(req, res){
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-  let num = parseInt(req.body.surveyNumber);
-
-  if (db.getData(username,password) && db.getData(username,password).rating >= 0) {
-    res.json({error:true,message:"the survey has already been taken on this account"});
-    return;
+  if (req.isAuthenticated()) {
+    let name = req.user.username;
+    let num = parseInt(req.body.surveyNumber);
+    return(db.surveyNumber(name,num,res));
+    
   }
-  let done = false;
-  for(let i=10; i>0; i--) {
-    if(num >= (4*i) && !done) {
-      num = i;
-      done = true;
-    }
-  }
-  console.log("Yee survey num: "+num);
-  let tempData = db.getData(username,password);
-  let obj = new Data(username,tempData.profilepic,num,password); //the 5 is temporary, is the yee rating
-  let val = db.putData(obj);
-  if (val)
-    res.json({error:false,num:num});
-  else
-    res.json({error:true,message:"Incorrect username or password"});
-
 });
 
 module.exports = router;

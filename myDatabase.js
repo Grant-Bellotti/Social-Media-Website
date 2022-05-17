@@ -39,6 +39,39 @@ myDatabase.prototype.getData = function(name,res) {
    });
 }
 
+myDatabase.prototype.surveyNumber = function(name,num,res) {
+  DataModel.find({name:name},function(error,info) {
+      if (error) {
+          return res.json({error:true});
+      }
+      else if (info == null) {
+          return res.json({error:true});
+      }
+      if (info.length == 1 && parseInt(info[0].yeescore) < 0) {
+        let retNum = num;
+        let done = false;
+        for(let i=10; i>0; i--) {
+          if(retNum >= (4*i) && !done) {
+            retNum = i;
+            done = true;
+          }
+        }
+        console.log("Yee survey num: " + retNum);
+        DataModel.findOneAndUpdate({name:name},{yeescore:retNum},function(error,oldData) {
+          if (error) {
+            return res.json({error:true});
+          }
+          else if (oldData == null) {
+            return res.json({error:true});
+          }
+          return res.json({error:false,num:retNum});
+        });
+      } else {
+          return res.json({error:true,message:"the survey has already been taken on this account"});
+      }
+   });
+}
+
 myDatabase.prototype.putData = function(data,res) {
   DataModel.findOneAndUpdate({name:data.name},{picture:data.picture},function(error,oldData) {
     if (error) {
@@ -49,23 +82,6 @@ myDatabase.prototype.putData = function(data,res) {
     }
     return res.json({error:false});
   });
-}
-
-myDatabase.prototype.putYeescore = function(data,res) {
-  if(data.yeescore > -1) {
-    DataModel.findOneAndUpdate({name:data.name},{yeescore:data.yeescore},function(error,oldData) {
-      if (error) {
-        return res.json({error:true});
-      }
-      else if (oldData == null) {
-        return res.json({error:true});
-      }
-      return res.json({error:false});
-    });
-  }
-  else {
-    return res.json({error:true});
-  }
 }
 
 myDatabase.prototype.deleteData = function(ident,res) {
