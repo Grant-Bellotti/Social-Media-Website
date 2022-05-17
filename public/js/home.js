@@ -20,11 +20,28 @@ socket.on('welcome', function(data) {
    type: "GET",
    data: {'id':0},
    success: function(data2){
-     storedMessages = data2.test;
-     $("#messages").append(storedMessages);
-     for(let i =1; i<=data2.IDs;i++) {
-      collapseIt(i);
-     }
+     
+
+                              if(data2.IDs > 1){
+                                 storedMessages = data2.test;
+                                 console.log(data2.test);
+                                 $("#messages").append(storedMessages);
+                                 for(let i =2; i<=data2.IDs;i++) {
+                                  collapseIt(i);
+                                 }
+                               }
+                                  let newID = data2.IDs +1;
+                                  messageid = newID;
+                                  $.ajax({
+                                url: "/setmessageid",
+                                type: "POST",
+                                data: {'ID':newID},
+                                success: function(data){
+                                  console.log(data);
+                                } ,
+                                dataType: "json"
+                                       });
+
    } ,
    dataType: "json"
   });
@@ -178,23 +195,36 @@ function commentit(id){
         return false;
       } else {
         let user = info.user;
-        $.ajax({
-          url: "/storeComment",
-          type: "POST",
-          data: {text: text,messageID:id,user:user},
-          success: function(data){
+         $.ajax({
+              url: "/getData",
+              type: "GET",
+             data: {messageID:id},
+              success: function(data){
 
-          } ,
-          dataType: "json"
-        });
-        socket.emit('updateComments', {'text': text,'messageID':id,'user': user});
-        $("#"+"t"+id).val("");
+                let oldComment = data.comments;
+                console.log(oldComment);
+                           $.ajax({
+                        url: "/storeComment",
+                        type: "POST",
+                       data: {text: text,messageID:id,user:user,oldComment:oldComment},
+                        success: function(data2){
+
+
+                        } ,
+                        dataType: "json"
+                      });
+              } ,
+              dataType: "json"
+            });
+       socket.emit("updateComments",{"text":text,"messageID":id,"user":user})
+       $("#t" + id).val("");
       }
     });
   }
-  else
-    alert("you need a message");
+
 }
+
+
 
 function collapseIt(messageID){
 var coll = document.getElementById(messageID);
@@ -238,6 +268,7 @@ $(document).ready(function(){
   changeView();
 
   $.get("/getInfo",function(data){
+    if(data)
     $("#session").html("Welcome, " + data.name);
 
   });

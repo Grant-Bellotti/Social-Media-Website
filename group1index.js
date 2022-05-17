@@ -10,14 +10,19 @@ var path = require("path");
 var session = require("express-session");
 let http = require('http');
 
+
 var setUpPassport = require("./setuppassport");
 var routes = require("./routes");
 var routesUser = require("./routesUser");
 
 
+//var setUpPassport = require("./setuppassport");
+
+
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 mongoose.connect("mongodb://localhost:27017/group1db");
 setUpPassport();

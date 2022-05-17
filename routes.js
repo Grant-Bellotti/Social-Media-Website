@@ -152,19 +152,15 @@ router.post('/storeMessage', function(req, res){
   }
 
   let obj = new MessageData(message,id,user,type,color,comments,realMessage); //the -1 is temporary, is the yee rating
-  let val = messageDb.postData(obj);
   messageID++;
-  console.log(val);
-  if (val)
-    res.json({error:false});
-  else
-    res.json({error:true});
+return(messageDb.postData(obj,res));
 
 });
 router.post('/storeComment', function(req, res){
   let message = req.body.text.trim();
   let id = req.body.messageID.trim();
   let user = req.body.user.trim();
+  let oldComment = req.body.oldComment;
  //let survey= req.body.survey.trim();
 
   if (message == "") {
@@ -172,72 +168,39 @@ router.post('/storeComment', function(req, res){
       return;
   }
 
-  let comment = " " + user + ": " + message;
-  let val = messageDb.postComment(id,comment);
-  messageID++;
-  console.log(val);
-  if (val)
-    res.json({error:false});
-  else
-    res.json({error:true});
+  let comment = oldComment + " <br> " + user + ": " + message + " <br> ";
+  //messageID++;
+  console.log(oldComment);
+   return(messageDb.postComment(id,comment,res));
 
 });
+
+router.get('/getmessageLength', function(req, res){
+return(messageDb.getmessageLength(res))
+});
+
+router.get('/getData', function(req, res){
+return(messageDb.getData(req.query.messageID,res))
+});
+
 router.get('/getstoredMessages', function(req, res){
-  let chat = "";
-  let newmessageId;
-  console.log(messageDb.getmessageLength());
-  if(messageDb.getmessageLength()>0){
-    for(let i =0; i<messageDb.getmessageLength();i++) {
-      let newMessage = messageDb.getData(i);
-      let type = newMessage.type;
-
-      if(type == "Text") {
-        chat += (
-        '<div class="postBlock">' +
-        '<p class="postli" style="background-color:'+ newMessage.color +';">' + newMessage.message + ": " + newMessage.user + '<br>'+'<body>'+newMessage.realMessage+'</body>'+'</p>'+
-        '<div>' +
-
-        "<button type=button id='" + newMessage.id + "'class='collapsible' " + 'style="background-color:'+ newMessage.color + ';">' + 'Comments</button>'+
-
-        "<div id =" + "d"+ newMessage.id + " class="+ "content"+"> " +"<hr>"
-          +"<ul id=" + "p"+ newMessage.id + ">"+newMessage.comments+  " </ul>" + "<br>"
-          +"<input id =" + "t" + newMessage.id + " type="+ "text"+">"
-          +"<input id =" + "c"+ newMessage.id + " type=button name=commentb" +
-          "value=PostComment onclick= " + "commentit("+  newMessage.id + ")>" +"<br>"
-        +"</div>"
-        +"</div>"
-        +"</div>"
-        );
-      }
-      else if(type == "Image") {
-        chat += (
-        '<div class="postBlock">' +
-        "<p class='imageUser'>" + newMessage.user + "</p>" +
-        "<img id='display' class='postli'" + 'style="background-color:'+ newMessage.color +';" src="images/' + newMessage.message +'"height="150" width="150">' +
-
-        '<div>' +
-
-      "<button type=button id='" + newMessage.id + "'class='collapsible' " + 'style="background-color:'+ newMessage.color + ';">' + 'Comments</button>'+
-
-      "<div id =" + "d"+ newMessage + " class="+ "content"+"> " +"<hr>"
-        +"<ul id=" + "p"+ newMessage.id + ">"+newMessage.comments+  "</ul>" + "<br>"
-        +"<input id =" + "t" + newMessage.id + " type="+ "text"+">"
-        +"<input id =" + "c"+ newMessage.id + " type=button name=commentb" +
-        "value=PostComment onclick= " + "commentit("+  newMessage.id + ")>" +"<br>"
-      +"</div>"
-      +"</div>"
-      +"</div>"
-        );
-      }
-      newmessageId = newMessage.id;
-    }
-  }
-  res.json({test:chat, IDs:newmessageId});
+  
+return(messageDb.getAllData(res));
 
 });
 router.get('/getMessageid', function(req, res){
   res.json(messageID);
 
 });
+router.post('/setMessageid', function(req, res){
+
+  messageID = req.body.ID;
+  res.json(true);
+
+});
+/////Checks Login Info//////
+
+
+
 
 module.exports = router;
