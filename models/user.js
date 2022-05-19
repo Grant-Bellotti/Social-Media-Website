@@ -15,15 +15,11 @@ var noop = function() {};
 userSchema.pre("save", function(done) {
   var user = this;
 
-console.log("userSchema.pre(sav...")
-
   if (!user.isModified("password")) {
     console.log("!user.isModified")
     return done();
   }
-console.log("bcrypt.genSalt")
   bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
-console.log("bcrypt.genSalt function callback")
     if (err) { return done(err); }
     bcrypt.hash(user.password, salt, noop, function(err, hashedPassword) {
 console.log("bcrypt.hash function callback  " + hashedPassword)

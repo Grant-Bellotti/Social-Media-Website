@@ -24,7 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-mongoose.connect("mongodb://localhost:27017/group1db");
+mongoose.connect("mongodb://127.0.0.1:27017/group1db");
+//mongoose.connect("mongodb://localhost:27017/group1db"); //change localhost to 127.0.0.1
 setUpPassport();
 
 app.use('/favicon.ico', express.static('public/favicon.webp'));
