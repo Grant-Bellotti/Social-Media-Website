@@ -13,16 +13,20 @@ function logoutClicked(){
 function uploadSuccess(data) {
   if (action == "Update") {
     $.get("/getInfo",function(info){
+      let tempPic = data.filename2;
+      if(!$("#uploader").val())  {
+        tempPic = info.picture;
+      }
       $.ajax({
         url: "/update",
         type: "PUT",
-        data: {picture:data.filename2,yeescore:info.yeescore},
+        data: {picture:tempPic,yeescore:info.yeescore},
         success: function(data2){
           if (data2.error)
             alert(data2.message);
           else {
             alert("account updated");
-            display.src = "images/" + data.filename2;
+            display.src = "images/" + tempPic;
           }
         } ,
       dataType: "json"

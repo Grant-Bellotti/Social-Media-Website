@@ -42,7 +42,7 @@ router.get("/faillogin", function(req, res) {
 ///////////////////////////////////////////////
 
 router.get("/",function(req,res){
-  res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
+  res.sendFile(path.resolve(__dirname + "/public/views/home.html"));  //changed
 });
 router.get("/profile",function(req,res){
   let thePath;
