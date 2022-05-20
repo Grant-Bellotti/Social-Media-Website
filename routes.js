@@ -40,6 +40,10 @@ router.get("/faillogin", function(req, res) {
 });
 
 ///////////////////////////////////////////////
+router.get("/api",function(req,res){
+  res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
+});
+
 
 router.get("/",function(req,res){
   res.sendFile(path.resolve(__dirname + "/public/views/index.html"));  //changed
