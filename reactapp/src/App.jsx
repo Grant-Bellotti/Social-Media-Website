@@ -27,7 +27,7 @@ class App extends React.Component {
 
     getScript(){
         socket.on('welcome',function(data){
-            console.log('worked');
+        (document.getElementById('realScript'));
         })
     }
 
@@ -38,7 +38,7 @@ class App extends React.Component {
     }
 
     render() {
-        this.getScript()
+        let test = this.getScript()
         return (
             <div>
 

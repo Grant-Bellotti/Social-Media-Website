@@ -152,3 +152,32 @@ li a.active {
   color: rgb(0, 0, 0);
   background-color: #ffffff;
 }
+
+
+.commentBlock{
+  margin: 0px;
+  width: 100%;
+  background-color: #000000;
+  color: white;
+  height: 50px;
+  text-align: center;
+  font-size: larger;
+}
+
+ul{
+  padding-left: 0px;
+}
+body{
+  margin: 0px;
+}
+
+.userBlock{
+  margin: 0px;
+  width: 100%;
+  background-color: #000000;
+  color: white;
+  height: auto;
+  text-align: center;
+  font-size: x-large;
+  overflow-wrap: break-word;
+}

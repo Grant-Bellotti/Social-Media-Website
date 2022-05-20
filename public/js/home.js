@@ -16,31 +16,34 @@ $.ajax({
 socket.on('welcome', function(data) {
   let storedMessages = "4455";
   $.ajax({
-    url: "/getstoredMessages",
-    type: "GET",
-    data: {'id':0},
-    success: function(data2){
-      if(data2.IDs > 1){
-      storedMessages = data2.test;
-      console.log(data2.test);
-      $("#messages").append(storedMessages);
-      for(let i =2; i<=data2.IDs;i++) {
-        collapseIt(i);
-      }
-    }
-    let newID = data2.IDs +1;
-    messageid = newID;
-    $.ajax({
-      url: "/setmessageid",
-      type: "POST",
-      data: {'ID':newID},
-      success: function(data){
-        console.log(data);
-      } ,
-      dataType: "json"
-    });
-  } ,
-  dataType: "json"
+   url: "/getstoredMessages",
+   type: "GET",
+   data: {'id':0},
+   success: function(data2){
+     
+
+                              if(data2.IDs > 1){
+                                 storedMessages = data2.test;
+                                 console.log(data2.test);
+                                 $("#messages").append(storedMessages);
+                                 for(let i =2; i<=data2.IDs;i++) {
+                                  collapseIt(i);
+                                 }
+                               }
+                                  let newID = data2.IDs +1;
+                                  messageid = newID;
+                                  $.ajax({
+                                url: "/setmessageid",
+                                type: "POST",
+                                data: {'ID':newID},
+                                success: function(data){
+                                  console.log(data);
+                                } ,
+                                dataType: "json"
+                                       });
+
+   } ,
+   dataType: "json"
   });
 });
 
@@ -94,9 +97,12 @@ $.ajax({
      } ,
      dataType: "json"
    });
+   
 });
 
-socket.on('updateComments',(data) => {
+
+socket.on('updateComments',(data) =>
+{
   $("#"+"p"+data.messageID).append("<p> "+ data.user + ": " + data.text +  " <p>");
 });
 
@@ -122,7 +128,6 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-
 }
 
 function uploadSuccess(data) {
@@ -190,25 +195,27 @@ function commentit(id){
         return false;
       } else {
         let user = info.user;
-        $.ajax({
-          url: "/getData",
-          type: "GET",
-          data: {messageID:id},
-          success: function(data){
-            let oldComment = data.comments;
-            console.log(oldComment);
-            $.ajax({
-              url: "/storeComment",
-              type: "POST",
-             data: {text: text,messageID:id,user:user,oldComment:oldComment},
-              success: function(data2){
+         $.ajax({
+              url: "/getData",
+              type: "GET",
+             data: {messageID:id},
+              success: function(data){
 
+                let oldComment = data.comments;
+                console.log(oldComment);
+                           $.ajax({
+                        url: "/storeComment",
+                        type: "POST",
+                       data: {text: text,messageID:id,user:user,oldComment:oldComment},
+                        success: function(data2){
+
+
+                        } ,
+                        dataType: "json"
+                      });
               } ,
               dataType: "json"
             });
-          } ,
-          dataType: "json"
-        });
        socket.emit("updateComments",{"text":text,"messageID":id,"user":user})
        $("#t" + id).val("");
       }
@@ -216,17 +223,34 @@ function commentit(id){
   }
 }
 
+
+
 function collapseIt(messageID){
-  var coll = document.getElementById(messageID);
+var coll = document.getElementById(messageID);
+  
   coll.addEventListener("click", function() {
     this.classList.toggle("active");
+
+    $.ajax({
+      url: "/userPage",
+      type: "POST",
+      data: {PostID:messageID},
+      success: function(data){
+        window.location = '/userPage'
+      } ,
+      dataType: "json"
+    });
+
+    /*
     var content = this.nextElementSibling;
     if (content.style.display === "block") {
       content.style.display = "none";
     } else {
       content.style.display = "block";
-    }
+    }*/
   });
+  
+
 }
 
 function showPassword() {
@@ -238,7 +262,6 @@ function showPassword() {
     input.type = "password";
   }
 }
-
 $(document).ready(function(){
   $("form").submit(function(event) {
     let data = new FormData($(this)[0]);
@@ -258,7 +281,7 @@ $(document).ready(function(){
 
   $.get("/getInfo",function(data){
     if(data)
-      $("#session").html("Welcome, " + data.name);
+    $("#session").html("Welcome, " + data.name);
 
   });
 });

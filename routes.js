@@ -71,8 +71,7 @@ router.get("/survey",function(req,res){
     thePath = path.resolve(__dirname + "/public/views/survey.html");
     res.sendFile(thePath);
   } else {
-    thePath = path.resolve(__dirname + "/public/views/profileLogin.html");
-    res.sendFile(thePath);
+    res.json({redirect:"/profileLogin"});
   }
 });
 /*
@@ -141,6 +140,22 @@ router.post('/fileupload', function(req, res) {
     });
 });
 
+let thisPost;
+router.get("/userPage",function(req,res){  
+  res.sendFile(path.resolve(__dirname + "/public/views/userPage.html"));  //changed
+});
+
+router.post("/userPage",function(req,res){
+  thisPost = req.body.PostID;
+  res.json({});  
+});
+
+router.get("/getPostID",function(req,res){
+  console.log(thisPost);
+  res.json({ID:thisPost});  
+});
+
+
 router.post('/storeMessage', function(req, res){
   let message = req.body.message.trim();
   let id = req.body.id.trim();
@@ -185,11 +200,12 @@ return(messageDb.getmessageLength(res))
 });
 
 router.get('/getData', function(req, res){
+  
 return(messageDb.getData(req.query.messageID,res))
 });
 
 router.get('/getstoredMessages', function(req, res){
-
+  
 return(messageDb.getAllData(res));
 
 });
@@ -197,6 +213,7 @@ router.get('/getMessageid', function(req, res){
   res.json(messageID);
 
 });
+
 router.post('/setMessageid', function(req, res){
 
   messageID = req.body.ID;

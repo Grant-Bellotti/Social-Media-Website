@@ -52,6 +52,7 @@ myDatabase.prototype.postComment = function(id,comment,res) {
 }
 
 myDatabase.prototype.getData = function(id,res) {
+  console.log(id,"DATABASE");
   DataModel.find({id:id},function(error,info) {
       if (error) {
           return res.json({error:true});
@@ -90,8 +91,8 @@ myDatabase.prototype.getAllData = function(res) {
 
              if(info[i].type == "Text") {
         chat += (
-        '<div class="postBlock">' +
-        '<p class="postli" style="background-color:'+ info[i].color +';">' + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
+        `<div class="postBlock" id=${info[i].id}>` +
+        '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
         '<div>' +
 
         "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
