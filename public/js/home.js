@@ -22,7 +22,6 @@ socket.on('welcome', function(data) {
     success: function(data2){
       if(data2.IDs > 1){
       storedMessages = data2.test;
-      console.log(data2.test);
       $("#messages").append(storedMessages);
       for(let i =2; i<=data2.IDs;i++) {
         collapseIt(i);
@@ -83,6 +82,26 @@ else if(data.type == "Image") {
       +"</div>"
   );
 }
+else if(data.type == "Video") {
+  $("#messages").append(
+    "<div class='postBlock'>" +
+    "<p class='imageUser'>" + data.user + "</p>" +
+    "<video id='video' class='postli'" + "style='background-color:"+ data.color +";'" + "width='230' height='150' controls>" +
+      "<source src='videos/" + data.msg + "'type='video/mp4'>" +
+    "</video>" +
+    "<div>" +
+    "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
+
+        "<div id =" + "d"+ messageid + " class="+ "content"+"> " +"<hr>"
+        +"<ul id=" + "p"+ messageid + "></ul>" + "<br>"
+        +"<input id =" + "t" + messageid + " type="+ "text"+">"
+        +"<input id =" + "c"+ messageid + " type=button name=commentb" +
+        "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
+      +"</div>"
+      +"</div>"
+      +"</div>"
+  );
+}
 
 collapseIt(messageid);
 $.ajax({
@@ -106,12 +125,24 @@ function changeView() {
     document.getElementById("postC").style.visibility = "visible";
     document.getElementById("uploader").style.visibility = "hidden";
     document.getElementById("uploader2").style.visibility = "hidden";
+    document.getElementById("uploader3").style.visibility = "hidden";
+    document.getElementById("uploader4").style.visibility = "hidden";
   }
   else if ($("input:radio[name='type']:checked").val() == "Image") {
     document.getElementById("postC").style.visibility = "hidden";
     document.getElementById("postC2").style.visibility = "hidden";
     document.getElementById("uploader").style.visibility = "visible";
     document.getElementById("uploader2").style.visibility = "visible";
+    document.getElementById("uploader3").style.visibility = "hidden";
+    document.getElementById("uploader4").style.visibility = "hidden";
+  }
+  else if ($("input:radio[name='type']:checked").val() == "Video") {
+    document.getElementById("postC").style.visibility = "hidden";
+    document.getElementById("postC2").style.visibility = "hidden";
+    document.getElementById("uploader").style.visibility = "hidden";
+    document.getElementById("uploader2").style.visibility = "hidden";
+    document.getElementById("uploader3").style.visibility = "visible";
+    document.getElementById("uploader4").style.visibility = "visible";
   }
 }
 
@@ -160,6 +191,15 @@ function uploadSuccess(data) {
 
         if(msg == "empty.webp") {
           alert ("image is required");
+          return;
+        }
+      }
+      else if (type == "Video") {
+        console.log("===========" + data.video);
+        msg = data.video;
+
+        if(msg == "empty.webp") {
+          alert ("video is required");
           return;
         }
       }
@@ -242,16 +282,29 @@ function showPassword() {
 $(document).ready(function(){
   $("form").submit(function(event) {
     let data = new FormData($(this)[0]);
-    $.ajax({
-      url: '/fileupload',
-      type: 'POST',
-      data: data,
-      processData: false, // These two are needed to prevent JQuery from processing the form data
-      contentType: false,
-      mimeType: 'multipart/form-data',
-      dataType: 'json', // Without this, the server's response will be a string instead of a JSON object
-      success: uploadSuccess
-    });
+    if($("input:radio[name='type']:checked").val() == "Video") {
+      $.ajax({
+        url: '/videoupload',
+        type: 'POST',
+        data: data,
+        processData: false, // These two are needed to prevent JQuery from processing the form data
+        contentType: false,
+        mimeType: 'multipart/form-data',
+        dataType: 'json', // Without this, the server's response will be a string instead of a JSON object
+        success: uploadSuccess
+      });
+    } else {
+      $.ajax({
+        url: '/fileupload',
+        type: 'POST',
+        data: data,
+        processData: false, // These two are needed to prevent JQuery from processing the form data
+        contentType: false,
+        mimeType: 'multipart/form-data',
+        dataType: 'json', // Without this, the server's response will be a string instead of a JSON object
+        success: uploadSuccess
+      });
+    }
     return false;
   });
   changeView();

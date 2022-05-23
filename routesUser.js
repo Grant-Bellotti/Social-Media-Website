@@ -81,13 +81,12 @@ router.put('/update', function(req, res){
   if (req.isAuthenticated()) {
     let name = req.user.username;
     let picture = req.body.picture.trim();
-    let yeescore = parseInt(req.body.yeescore);
 
     if (picture == "") {
         picture = "images/empty.webp";
     }
 
-    let obj = new Data(name,picture,yeescore);
+    let obj = new Data(name,picture);
     return(db.putData(obj,res));
 
   } else {
@@ -100,7 +99,7 @@ router.post('/surveySubmit', function(req, res){
     let name = req.user.username;
     let num = parseInt(req.body.surveyNumber);
     return(db.surveyNumber(name,num,res));
-    
+
   }
 });
 

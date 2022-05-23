@@ -5,7 +5,7 @@ var DataModel = require("./models/Messages");
 
 
 let myDatabase = function() {
-    
+
 }
 
 myDatabase.prototype.displayData = function() {
@@ -38,7 +38,7 @@ myDatabase.prototype.postData = function(_data,res) {
   });
 }
 myDatabase.prototype.postComment = function(id,comment,res) {
- 
+
  DataModel.findOneAndUpdate({id:id},{comments:comment},function(error,oldData) {
     if (error) {
       return res.json({error:true});
@@ -116,7 +116,7 @@ myDatabase.prototype.getAllData = function(res) {
 
       "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
 
-      "<div id =" + "d"+ info[i] + " class="+ "content"+"> " +"<hr>"
+      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
         +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>" + "<br>"
         +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
         +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
@@ -124,6 +124,26 @@ myDatabase.prototype.getAllData = function(res) {
       +"</div>"
       +"</div>"
       +"</div>"
+        );
+      }
+      else if(info[i].type == "Video") {
+        chat += (
+          "<div class='postBlock'>" +
+          "<p class='imageUser'>" + info[i].user + "</p>" +
+          "<video id='video' class='postli'" + "style='background-color:"+ info[i].color +";'" + "width='230' height='150' controls>" +
+            "<source src='videos/" + info[i].message + "'type='video/mp4'>" +
+          "</video>" +
+          "<div>" +
+          "<button type=button id ="+ info[i].id+ " class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
+
+              "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
+              +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>" + "<br>"
+              +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
+              +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
+              "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
+            +"</div>"
+            +"</div>"
+            +"</div>"
         );
       }
       newmessageId = info[i].id;

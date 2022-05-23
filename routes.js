@@ -136,6 +136,22 @@ router.post('/fileupload', function(req, res) {
         });
     });
 });
+router.post('/videoupload', function(req, res) {
+    console.log("router.post fileupload");
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        var oldpath = files.video.path;
+        var newpath = __dirname + '/public/videos/' + files.video.name;
+        console.log('Received video: ' + files.video.name);
+        mv(oldpath, newpath, function (err) {
+//            if (err) throw err;
+            if (err)
+                res.json({error:false,video: "empty.webp"});
+            else
+                res.json({error:false,video: files.video.name });
+        });
+    });
+});
 
 router.post('/storeMessage', function(req, res){
   let message = req.body.message.trim();

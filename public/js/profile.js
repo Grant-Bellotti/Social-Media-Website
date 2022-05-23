@@ -20,7 +20,7 @@ function uploadSuccess(data) {
       $.ajax({
         url: "/update",
         type: "PUT",
-        data: {picture:tempPic,yeescore:info.yeescore},
+        data: {picture:tempPic},
         success: function(data2){
           if (data2.error)
             alert(data2.message);
