@@ -155,7 +155,7 @@ router.post('/videoupload', function(req, res) {
 
 router.post('/storeMessage', function(req, res){
   let message = req.body.message.trim();
-  let id = req.body.id.trim();
+  let id = parseInt(req.body.id.trim());
   let user = req.body.user.trim();
   let type = req.body.type.trim();
   let color = req.body.color.trim();
@@ -169,13 +169,13 @@ router.post('/storeMessage', function(req, res){
   }
 
   let obj = new MessageData(message,id,user,type,color,comments,realMessage); //the -1 is temporary, is the yee rating
-  messageID++;
+  messageID = id + 1;
 return(messageDb.postData(obj,res));
 
 });
 router.post('/storeComment', function(req, res){
   let message = req.body.text.trim();
-  let id = req.body.messageID.trim();
+  let id = parseInt(req.body.messageID.trim());
   let user = req.body.user.trim();
   let oldComment = req.body.oldComment;
  //let survey= req.body.survey.trim();
