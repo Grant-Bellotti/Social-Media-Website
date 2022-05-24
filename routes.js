@@ -170,9 +170,10 @@ router.post('/storeMessage', function(req, res){
 
   let obj = new MessageData(message,id,user,type,color,comments,realMessage); //the -1 is temporary, is the yee rating
   messageID = id + 1;
-return(messageDb.postData(obj,res));
+  return(messageDb.postData(obj,res));
 
 });
+
 router.post('/storeComment', function(req, res){
   let message = req.body.text.trim();
   let id = parseInt(req.body.messageID.trim());

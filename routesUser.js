@@ -89,7 +89,6 @@ router.put('/update', function(req, res){
         picture = "images/empty.webp";
     }
 
-
     let obj = new Data(name,picture,yeescore,yeetitle);
     return(db.putData(obj,res));
 
@@ -101,8 +100,6 @@ router.put('/update', function(req, res){
 router.post('/surveySubmit', function(req, res){
   if (req.isAuthenticated()) {
     let name = req.user.username;
-
-
 
     if(!(parseInt(req.body.q1)+parseInt(req.body.q2)+
       parseInt(req.body.q3)+parseInt(req.body.q4)+
