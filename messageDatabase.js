@@ -96,8 +96,8 @@ myDatabase.prototype.getAllData = function(res) {
 
         "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
 
-        "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>" + "<br>"
+        "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
+          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>"
           +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
           +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
           "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
@@ -116,8 +116,8 @@ myDatabase.prototype.getAllData = function(res) {
 
       "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
 
-      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-        +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>" + "<br>"
+      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
+        +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>"
         +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
         +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
         "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
@@ -136,8 +136,8 @@ myDatabase.prototype.getAllData = function(res) {
           "<div>" +
           "<button type=button id ="+ info[i].id+ " class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
 
-              "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-              +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>" + "<br>"
+              "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
+              +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>"
               +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
               +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
               "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"

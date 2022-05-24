@@ -59,8 +59,8 @@ if(data.type == "Text") {
     '<div>'+
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
-        "<div id =" + "d"+ messageid + " class="+ "content"+"> " +"<hr>"
-        +"<ul id=" + "p"+ messageid + "></ul>" + "<br>"
+        "<div id =" + "d"+ messageid + " class="+ "content"+"> "
+        +"<ul id=" + "p"+ messageid + "></ul>"
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
         +"<input id =" + "c"+ messageid + " type=button name=commentb" +
         "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
@@ -77,8 +77,8 @@ else if(data.type == "Image") {
     "<div>" +
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
-        "<div id =" + "d"+ messageid + " class="+ "content"+"> " +"<hr>"
-        +"<ul id=" + "p"+ messageid + "></ul>" + "<br>"
+        "<div id =" + "d"+ messageid + " class="+ "content"+"> "
+        +"<ul id=" + "p"+ messageid + "></ul>" 
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
         +"<input id =" + "c"+ messageid + " type=button name=commentb" +
         "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
@@ -97,8 +97,8 @@ else if(data.type == "Video") {
     "<div>" +
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
-        "<div id =" + "d"+ messageid + " class="+ "content"+"> " +"<hr>"
-        +"<ul id=" + "p"+ messageid + "></ul>" + "<br>"
+        "<div id =" + "d"+ messageid + " class="+ "content"+"> "
+        +"<ul id=" + "p"+ messageid + "></ul>"
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
         +"<input id =" + "c"+ messageid + " type=button name=commentb" +
         "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
