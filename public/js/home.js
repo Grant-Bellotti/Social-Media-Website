@@ -42,6 +42,7 @@ socket.on('welcome', function(data) {
       dataType: "json"
     });
     */
+
   } ,
   dataType: "json"
   });
@@ -71,7 +72,7 @@ if(data.type == "Text") {
 else if(data.type == "Image") {
   $("#messages").append(
     "<div class='postBlock'>" +
-    "<p class='imageUser'>" + data.user + "</p>" +
+    "<p class='imageUser'>" + data.bodyMSG+ "</p>" +
     "<img id='display' class='postli'" + 'style="background-color:'+ data.color +';" src="images/' + data.msg +'"height="150" width="150">' +
     "<div>" +
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
@@ -193,7 +194,7 @@ function uploadSuccess(data) {
       }
       else if (type == "Image") {
         msg = data.filename2;
-
+        bodyMSG = $('#postT').val();
         if(msg == "empty.webp") {
           alert ("image is required");
           return;

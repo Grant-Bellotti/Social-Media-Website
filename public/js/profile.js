@@ -20,7 +20,8 @@ function uploadSuccess(data) {
       $.ajax({
         url: "/update",
         type: "PUT",
-        data: {picture:tempPic},
+        data: {picture:tempPic,yeescore:info.yeescore,yeetitle:info.yeetitle},
+
         success: function(data2){
           if (data2.error)
             alert(data2.message);
@@ -42,6 +43,10 @@ $(document).ready(function(){
     if(data.yeescore > -1) {
       $("#yeescore").html("Yee Survey Score: " + data.yeescore);
     }
+    if(data.yeetitle != "A") {
+      $("#yeetitle").html("Yee Title: " + data.yeetitle);
+      }
+    
 
   });
 

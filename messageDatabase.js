@@ -109,7 +109,7 @@ myDatabase.prototype.getAllData = function(res) {
       else if(info[i].type == "Image") {
         chat += (
         '<div class="postBlock">' +
-        "<p class='imageUser'>" + info[i].user + "</p>" +
+        "<p class='imageUser'>" + info[i].realMessage + "</p>" +
         "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">' +
 
         '<div>' +
