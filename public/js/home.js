@@ -60,10 +60,10 @@ if(data.type == "Text") {
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
         "<div id =" + "d"+ messageid + " class="+ "content"+"> "
-        +"<ul id=" + "p"+ messageid + "></ul>"
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
-        +"<input id =" + "c"+ messageid + " type=button name=commentb" +
-        "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
+        +"<input id =" + "c"+ messageid + " type=button " +
+        "value=Comment onclick= " + "commentit("+  messageid + ")>"
+        +"<ul id=" + "p"+ messageid + "></ul>"
       +"</div>"
       +"</div>"
       +"</div>"
@@ -72,16 +72,16 @@ if(data.type == "Text") {
 else if(data.type == "Image") {
   $("#messages").append(
     "<div class='postBlock'>" +
-    "<p class='imageUser'>" + data.bodyMSG+ "</p>" +
+    "<p class='imageUser'>" + data.bodyMSG+ ": " + data.user + "</p>" +
     "<img id='display' class='postli'" + 'style="background-color:'+ data.color +';" src="images/' + data.msg +'"height="150" width="150">' +
     "<div>" +
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
         "<div id =" + "d"+ messageid + " class="+ "content"+"> "
-        +"<ul id=" + "p"+ messageid + "></ul>" 
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
-        +"<input id =" + "c"+ messageid + " type=button name=commentb" +
-        "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
+        +"<input id =" + "c"+ messageid + " type=button " +
+        "value=Comment onclick= " + "commentit("+  messageid + ")>"
+        +"<ul id=" + "p"+ messageid + "></ul>"
       +"</div>"
       +"</div>"
       +"</div>"
@@ -90,7 +90,7 @@ else if(data.type == "Image") {
 else if(data.type == "Video") {
   $("#messages").append(
     "<div class='postBlock'>" +
-    "<p class='imageUser'>" + data.user + "</p>" +
+    "<p class='imageUser'>" + data.bodyMSG+ ": " + data.user + "</p>" +
     "<video id='video' class='postli'" + "style='background-color:"+ data.color +";'" + "width='230' height='150' controls>" +
       "<source src='videos/" + data.msg + "'type='video/mp4'>" +
     "</video>" +
@@ -98,10 +98,10 @@ else if(data.type == "Video") {
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
         "<div id =" + "d"+ messageid + " class="+ "content"+"> "
-        +"<ul id=" + "p"+ messageid + "></ul>"
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
-        +"<input id =" + "c"+ messageid + " type=button name=commentb" +
-        "value=PostComment onclick= " + "commentit("+  messageid + ")>" +"<br>"
+        +"<input id =" + "c"+ messageid + " type=button " +
+        "value=Comment onclick= " + "commentit("+  messageid + ")>"
+        +"<ul id=" + "p"+ messageid + "></ul>"
       +"</div>"
       +"</div>"
       +"</div>"
@@ -175,12 +175,11 @@ function uploadSuccess(data) {
       let type = $("input:radio[name='type']:checked").val();
       let user = info.user;
       let msg = "";
-      let bodyMSG = ''
+      let bodyMSG = $('#postC').val();
       let color = getRandomColor()
 
       if (type == "Text") {
         msg = $('#postT').val();
-        bodyMSG = $('#postC').val();
 
         if(msg == "") {
           alert ("title is required");
@@ -199,13 +198,21 @@ function uploadSuccess(data) {
           alert ("image is required");
           return;
         }
+        else if(bodyMSG == "") {
+          alert ("title is required");
+          return;
+        }
       }
       else if (type == "Video") {
-        console.log("===========" + data.video);
+        bodyMSG = $('#postT').val();
         msg = data.video;
 
         if(msg == "empty.webp") {
           alert ("video is required");
+          return;
+        }
+        else if(bodyMSG == "") {
+          alert ("title is required");
           return;
         }
       }

@@ -188,7 +188,6 @@ router.post('/storeComment', function(req, res){
 
   let comment = oldComment + " <br> " + user + ": " + message + " <br> ";
   //messageID++;
-  console.log(oldComment);
    return(messageDb.postComment(id,comment,res));
 
 });
