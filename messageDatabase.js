@@ -144,49 +144,42 @@ myDatabase.prototype.getAllData = function(res) {
     for(let i =0; i<info.length;i++) {
 
              if(info[i].type == "Text") {
+              chat += (
+                `<div class="postBlock" id=${info[i].id}>` +
+                '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
+                '<div>' +
+                "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
+                "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
+                  +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>" + "<br>"
+                  +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
+                  +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
+                  "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
+                +"</div>"
+                +"</div>"
+                +"</div>"
+                );
+      }
+      else if(info[i].type == "Image") {
         chat += (
-
-        '<div class="postBlock">' +
-        '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+
-        '<p class="postli" style="background-color:'+ info[i].color +';"> ' + info[i].yeetitle + " "+ info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
-        '<div>' +
-
+          '<div class="postBlock">' +
+          "<p class='imageUser'>" + info[i].user + "</p>" +
+          "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">' +
+          '<div>' +
         "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-
-        "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
-          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>"
+        "<div id =" + "d"+ info[i] + " class="+ "content"+"> " +"<hr>"
+          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>" + "<br>"
           +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
           +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
           "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
         +"</div>"
         +"</div>"
         +"</div>"
-        );
-      }
-      else if(info[i].type == "Image") {
-        chat += (
-        '<div class="postBlock">' +
-        '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+
-        "<p class='imageUser'>" + info[i].user + "</p>" +
-        "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">'
-        +"</div>"+
+          );
 
-      "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-
-      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
-        +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>"
-        +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-        +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
-        "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
-      +"</div>"
-      +"</div>"
-      +"</div>"
-        );
       }
       else if(info[i].type == "Video") {
         chat += (
-          "<div class='postBlock'>" +
-
+          "<div class='postBlock' >" +
           "<p class='imageUser'>" + info[i].realMessage + ": " + info[i].user + "</p>" +
 
            '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+

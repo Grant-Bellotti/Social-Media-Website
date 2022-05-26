@@ -2,17 +2,6 @@ let ident;
 
 let messageid;
 let socket = io();
-/*
-$.ajax({
-  url: "/getmessageid",
-  type: "GET",
-  data: {'id':0},
-  success: function(data){
-    messageid = data;
-  } ,
-  dataType: "json"
-});
-*/
 
 //Get message from server.
 socket.on('welcome', function(data) {
@@ -31,17 +20,6 @@ socket.on('welcome', function(data) {
     }
     let newID = data2.IDs +1;
     messageid = newID;
-    /*
-    $.ajax({
-      url: "/setmessageid",
-      type: "POST",
-      data: {'ID':newID},
-      success: function(data){
-        console.log(data);
-      } ,
-      dataType: "json"
-    });
-    */
 
   } ,
   dataType: "json"
@@ -55,8 +33,8 @@ socket.on('update', (data) => {
 if(data.type == "Text") {
   $("#messages").append(
     '<div class="postBlock">' +
-    '<img width="50" height="50" src= images/'+ data.picture + ' >'+
-    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.msg + ": " + data.user + '<br>'+'<body>'+data.bodyMSG+'</body>'+'</p>'+
+    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.msg + ": " + data.user + '<br>'+'<body>'+data.bodyMSG+'</body>'+
+    '<img width="50" height="50" src= images/'+ data.picture + ' >'+'</p>'+
     '<div>'+
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
@@ -78,7 +56,6 @@ else if(data.type == "Image") {
     "<img id='display' class='postli'" + 'style="background-color:'+ data.color +';" src="images/' + data.msg +'"height="150" width="150">' +
     "<div>" +
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
-
         "<div id =" + "d"+ messageid + " class="+ "content"+"> "
         +"<input id =" + "t" + messageid + " type="+ "text"+">"
         +"<input id =" + "c"+ messageid + " type=button " +
@@ -286,15 +263,19 @@ function commentit(id){
 
 function collapseIt(messageID){
   var coll = document.getElementById(messageID);
+    
   coll.addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
+    $.ajax({
+      url: "/userPage",
+      type: "POST",
+      data: {PostID:messageID},
+      success: function(data){
+        window.location = '/userPage'
+      } ,
+      dataType: "json"
+    });
   });
+  
 }
 
 function showPassword() {

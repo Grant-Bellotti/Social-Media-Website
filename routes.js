@@ -120,6 +120,22 @@ let messageID = 1;
 let filename2;
 
 //////////////////////////////////
+let thisPost;
+router.get("/userPage",function(req,res){  
+  res.sendFile(path.resolve(__dirname + "/public/views/userPage.html"));  //changed
+});
+
+router.post("/userPage",function(req,res){
+  thisPost = req.body.PostID;
+  res.json({});  
+});
+
+router.get("/getPostID",function(req,res){
+  console.log(thisPost);
+  res.json({ID:thisPost});  
+});
+
+
 router.post('/fileupload', function(req, res) {
     console.log("router.post fileupload");
     var form = new formidable.IncomingForm();
