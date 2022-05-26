@@ -179,16 +179,30 @@ router.post('/storeComment', function(req, res){
   let id = parseInt(req.body.messageID.trim());
   let user = req.body.user.trim();
   let oldComment = req.body.oldComment;
+  let color = req.body.color;
  //let survey= req.body.survey.trim();
-
   if (message == "") {
       res.json({error:true,message:"Bad Message"});
       return;
   }
 
-  let comment = oldComment + " <br> " + user + ": " + message + " <br> ";
+let testComment =  
+`
+${oldComment}
+<div>
+  <p class="commentBlock" style="background-color:${color}">
+  ${user}: 
+  ${message}
+  </p>
+  <div>`
+
+  
+ 
+  
+  //+ " <br> " + user + ": " + message + " <br> ";
   //messageID++;
-   return(messageDb.postComment(id,comment,res));
+ // console.log(oldComment);
+   return(messageDb.postComment(id,testComment,res));
 
 });
 

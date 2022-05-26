@@ -38,8 +38,8 @@ myDatabase.prototype.postData = function(_data,res) {
   });
 }
 myDatabase.prototype.postComment = function(id,comment,res) {
-
  DataModel.findOneAndUpdate({id:id},{comments:comment},function(error,oldData) {
+    
     if (error) {
       return res.json({error:true});
     }
@@ -52,6 +52,7 @@ myDatabase.prototype.postComment = function(id,comment,res) {
 }
 
 myDatabase.prototype.getData = function(id,res) {
+  //console.log(id,"DATABASE");
   DataModel.find({id:id},function(error,info) {
       if (error) {
           return res.json({error:true});
@@ -74,6 +75,31 @@ myDatabase.prototype.getData = function(id,res) {
         }
    });
 }
+
+myDatabase.prototype.getComments = function(id,res) {
+  DataModel.find({id:id},function(error,info) {
+      if (error) {
+          return res.json({error:true});
+      }
+      else if (info == null) {
+          return res.json({error:true});
+      }
+
+      if (info.length == 1)    {
+          return res.json({error:false,message:info[0].message,
+                                        Id:info[0].id,
+                                        user:info[0].user,
+                                        type:info[0].type,
+                                        color:info[0].color,
+                                        comments:info[0].comments,
+                                        realMessage:info[0].realMessage});
+}
+ else{
+          return res.json({error:true});
+        }
+   });
+}
+
 myDatabase.prototype.getAllData = function(res) {
   DataModel.find({},function(error,info) {
       if (error) {
@@ -90,40 +116,17 @@ myDatabase.prototype.getAllData = function(res) {
 
              if(info[i].type == "Text") {
         chat += (
-        '<div class="postBlock">' +
-        '<p class="postli" style="background-color:'+ info[i].color +';">' + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
-        '<div>' +
-
-        "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-
-        "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
-          +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-          +"<input id =" + "c"+ info[i].id + " type=button " +
-          "value=Comment onclick= " + "commentit("+  info[i].id + ")>"
-          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>"
-        +"</div>"
-        +"</div>"
-        +"</div>"
+        `<div class="postBlock" id=${info[i].id}>` +
+        '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
+        "</div>"
         );
       }
       else if(info[i].type == "Image") {
         chat += (
         '<div class="postBlock">' +
-        "<p class='imageUser'>" + info[i].realMessage + ": " + info[i].user + "</p>" +
-        "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">' +
-
-        '<div>' +
-
-      "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-
-      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
-        +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-        +"<input id =" + "c"+ info[i].id + " type=button " +
-        "value=Comment onclick= " + "commentit("+  info[i].id + ")>"
-        +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>"
-      +"</div>"
-      +"</div>"
-      +"</div>"
+        "<p class='imageUser'>" + info[i].user + "</p>" +
+        "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">'
+        +"</div>"
         );
       }
       else if(info[i].type == "Video") {
