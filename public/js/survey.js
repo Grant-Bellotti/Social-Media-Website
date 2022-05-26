@@ -14,9 +14,23 @@ function submitClicked(){
         alert("your survey number is " + data.num);
         location.href = "/profile";
       }
+       $.ajax({
+        url: "/updateMessagesYT",
+        type: "PUT",
+        data: {yeetitle:data.title},
+
+        success: function(data2){
+          if (data2.error)
+            alert(data2.message);
+          else
+            console.log("goodUpdataeYeetitleMessage");
+        } ,
+      dataType: "json"
+        });
     },
     dataType: "json"
   });
+ 
   return false;
 }
 

@@ -161,6 +161,8 @@ router.post('/storeMessage', function(req, res){
   let color = req.body.color.trim();
   let comments = req.body.comments;
   let realMessage = req.body.realMessage.trim();
+  let propic = req.body.propic.trim();
+  let yeetitle = req.body.yeetitle.trim();
  //let survey= req.body.survey.trim();
 
   if (message == "") {
@@ -168,7 +170,7 @@ router.post('/storeMessage', function(req, res){
       return;
   }
 
-  let obj = new MessageData(message,id,user,type,color,comments,realMessage); //the -1 is temporary, is the yee rating
+  let obj = new MessageData(message,id,user,type,color,comments,realMessage,propic,yeetitle); //the -1 is temporary, is the yee rating
   messageID = id + 1;
   return(messageDb.postData(obj,res));
 
@@ -205,7 +207,20 @@ ${oldComment}
    return(messageDb.postComment(id,testComment,res));
 
 });
-
+router.put('/updateMessagesPropic', function(req, res){
+  if (req.isAuthenticated()) {
+    let user = req.user.username;
+    let profilepic = req.body.profilepic.trim();
+       return(messageDb.Updateprofile(user,profilepic,res));
+    }
+});
+router.put('/updateMessagesYT', function(req, res){
+  if (req.isAuthenticated()) {
+    let user = req.user.username;
+    let yeetitle = req.body.yeetitle.trim();
+       return(messageDb.Updateyeetitle(user,yeetitle,res));
+    }
+});
 router.get('/getmessageLength', function(req, res){
 return(messageDb.getmessageLength(res))
 });

@@ -1,12 +1,12 @@
 const numQuestions = 10; //change number if changing amount of questions
 const numAnswers = 4; //change number if changing amount of answers
 let numQuestionsRemaining = 10; //should equal the number in numQuestions
-let questions = ["<label>What is beef?</label> <br>",
-                  "<label>What is chicken?</label> <br>",
-                  "<label>What is pork?</label> <br>",
-                  "<label>How good is beef?</label> <br>",
-                  "<label>How good is chicken?</label> <br>",
-                  "<label>How good is pork?</label> <br>",
+let questions = ["<label>What color is Mr Yee color blind to?</label> <br>",
+                  "<label>What kind of car does Mr Yee drive?</label> <br>",
+                  "<label>On halloween, who does Mr Yee invite as a substitute teacher?</label> <br>",
+                  "<label>What University did Mr Yee attend?</label> <br>",
+                  "<label>What class is Mr Yee's favorite class to teach?</label> <br>",
+                  "<label>What is Mr Yee's favorite animal?</label> <br>",
                   "<label>Where is beef eaten?</label> <br>",
                   "<label>Where is chicken eaten?</label> <br>",
                   "<label>Where is pork eaten?</label> <br>",
@@ -35,7 +35,7 @@ let answers = [
 
                ["<input type=radio id=1 name=q5 value=0430204411>" + "<label for=q5>0</label>",
                 "<input type=radio id=2 name=q5 value=0130304011>" + "<label for=q5>0</label>",
-                "<input type=radio id=3 name=q5 value=0140300013" + "<label for=q5>0</label>",
+                "<input type=radio id=3 name=q5 value=0140300013>" + "<label for=q5>0</label>",
                 "<input type=radio id=4 name=q5 value=4131344021>" + "<label for=q5>4</label>"],
 
                ["<input type=radio id=1 name=q6 value=4140304411>" + "<label for=q6>0</label>",

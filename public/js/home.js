@@ -55,7 +55,8 @@ socket.on('update', (data) => {
 if(data.type == "Text") {
   $("#messages").append(
     '<div class="postBlock">' +
-    '<p class="postli" style="background-color:'+ data.color +';">' + data.msg + ": " + data.user + '<br>'+'<body>'+data.bodyMSG+'</body>'+'</p>'+
+    '<img width="50" height="50" src= images/'+ data.picture + ' >'+
+    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.msg + ": " + data.user + '<br>'+'<body>'+data.bodyMSG+'</body>'+'</p>'+
     '<div>'+
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+
 
@@ -72,6 +73,7 @@ if(data.type == "Text") {
 else if(data.type == "Image") {
   $("#messages").append(
     "<div class='postBlock'>" +
+    '<img width="50" height="50" src= images/'+ data.picture + ' >'+
     "<p class='imageUser'>" + data.bodyMSG+ ": " + data.user + "</p>" +
     "<img id='display' class='postli'" + 'style="background-color:'+ data.color +';" src="images/' + data.msg +'"height="150" width="150">' +
     "<div>" +
@@ -90,7 +92,10 @@ else if(data.type == "Image") {
 else if(data.type == "Video") {
   $("#messages").append(
     "<div class='postBlock'>" +
+
+    '<img width="50" height="50" src= images/'+ data.picture + ' >'+
     "<p class='imageUser'>" + data.bodyMSG+ ": " + data.user + "</p>" +
+
     "<video id='video' class='postli'" + "style='background-color:"+ data.color +";'" + "width='230' height='150' controls>" +
       "<source src='videos/" + data.msg + "'type='video/mp4'>" +
     "</video>" +
@@ -217,16 +222,26 @@ function uploadSuccess(data) {
         }
       }
 
-      $.ajax({
-        url: "/storeMessage",
-        type: "POST",
-        data: {message:msg,id:messageid,user:user,type:type,color:color,comments:"",realMessage:bodyMSG},
-        success: function(data){
+      
+          $.ajax({
+          url: "/getInfo",
+          type: "GET",
+          data: {},
+          success: function(data2){
+            $.ajax({
+              url: "/storeMessage",
+              type: "POST",
+              data: {message:msg,id:messageid,user:user,type:type,color:color,comments:"",realMessage:bodyMSG,propic:data2.picture,yeetitle:data2.yeetitle},
+              success: function(data){
 
-        } ,
-        dataType: "json"
-      });
-      socket.emit('update', {'type':type, 'msg': msg,'user':user,'color':color,'bodyMSG':bodyMSG});
+              } ,
+              dataType: "json"
+                  });
+             socket.emit('update', {'type':type, 'msg': msg,'user':user,'color':color,'bodyMSG':bodyMSG,'picture':data2.picture,'yeetitle':data2.yeetitle});
+          } ,
+          dataType: "json"
+          });
+    
       $('#postT').val("");
       $('#postC').val("");
       $('#uploader').val("");

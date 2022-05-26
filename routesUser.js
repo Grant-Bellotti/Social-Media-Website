@@ -8,6 +8,7 @@ var router = express.Router();
 const myDatabase = require('./myDatabase');    //added
 let db = new myDatabase();
 
+
 const Data = require('./Data');
 
 router.use(function(req, res, next) {
@@ -83,6 +84,7 @@ router.put('/update', function(req, res){
     let name = req.user.username;
     let picture = req.body.picture.trim();
 
+
     let yeescore = parseInt(req.body.yeescore);
     let yeetitle = req.body.yeetitle;
     if (picture == "") {
@@ -97,6 +99,7 @@ router.put('/update', function(req, res){
   }
 
 });
+
 router.post('/surveySubmit', function(req, res){
   if (req.isAuthenticated()) {
     let name = req.user.username;

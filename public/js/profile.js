@@ -32,6 +32,19 @@ function uploadSuccess(data) {
         } ,
       dataType: "json"
       });
+      $.ajax({
+        url: "/updateMessagesPropic",
+        type: "PUT",
+        data: {user:info.name,profilepic:tempPic},
+
+        success: function(data2){
+          if (data2.error)
+            alert(data2.message);
+          else
+            console.log("goodUpdataeProfilePicMessage");
+        } ,
+      dataType: "json"
+      });
     });
   }
 }

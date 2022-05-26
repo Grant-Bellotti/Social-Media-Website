@@ -29,7 +29,9 @@ myDatabase.prototype.postData = function(_data,res) {
               type: _data.type,
               color:_data.color,
               comments:_data.comments,
-              realMessage:_data.realMessage};   //added
+              realMessage:_data.realMessage,
+              propic: _data.propic,
+              yeetitle:_data.yeetitle};   //added
   DataModel.create(obj,function(error,info) {
       if (error) {
           return res.json({error:true});
@@ -50,7 +52,32 @@ myDatabase.prototype.postComment = function(id,comment,res) {
   });
   return true;
 }
+myDatabase.prototype.Updateprofile = function(user,picture,res) {
 
+ DataModel.updateMany({user:user},{propic:picture},function(error,oldData) {
+    if (error) {
+      return res.json({error:true});
+    }
+    else if (oldData == null) {
+      return res.json({error:true});
+    }
+    return res.json({error:false});
+  });
+  return true;
+}
+myDatabase.prototype.Updateyeetitle = function(user,yeetitle,res) {
+
+ DataModel.updateMany({user:user},{yeetitle:yeetitle},function(error,oldData) {
+    if (error) {
+      return res.json({error:true});
+    }
+    else if (oldData == null) {
+      return res.json({error:true});
+    }
+    return res.json({error:false});
+  });
+  return true;
+}
 myDatabase.prototype.getData = function(id,res) {
   //console.log(id,"DATABASE");
   DataModel.find({id:id},function(error,info) {
@@ -92,7 +119,9 @@ myDatabase.prototype.getComments = function(id,res) {
                                         type:info[0].type,
                                         color:info[0].color,
                                         comments:info[0].comments,
-                                        realMessage:info[0].realMessage});
+                                        realMessage:info[0].realMessage,
+                                        propic:info[0].propic,
+                                        yeetitle:info[0].yeetitle});
 }
  else{
           return res.json({error:true});
@@ -116,23 +145,51 @@ myDatabase.prototype.getAllData = function(res) {
 
              if(info[i].type == "Text") {
         chat += (
-        `<div class="postBlock" id=${info[i].id}>` +
-        '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
-        "</div>"
+
+        '<div class="postBlock">' +
+        '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+
+        '<p class="postli" style="background-color:'+ info[i].color +';"> ' + info[i].yeetitle + " "+ info[i].message + ": " + info[i].user + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
+        '<div>' +
+
+        "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
+
+        "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
+          +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  " </ul>"
+          +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
+          +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
+          "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
+        +"</div>"
+        +"</div>"
+        +"</div>"
         );
       }
       else if(info[i].type == "Image") {
         chat += (
         '<div class="postBlock">' +
+        '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+
         "<p class='imageUser'>" + info[i].user + "</p>" +
         "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">'
-        +"</div>"
+        +"</div>"+
+
+      "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
+
+      "<div id =" + "d"+ info[i].id + " class="+ "content"+"> "
+        +"<ul id=" + "p"+ info[i].id + ">"+info[i].comments+  "</ul>"
+        +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
+        +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
+        "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
+      +"</div>"
+      +"</div>"
+      +"</div>"
         );
       }
       else if(info[i].type == "Video") {
         chat += (
           "<div class='postBlock'>" +
+
           "<p class='imageUser'>" + info[i].realMessage + ": " + info[i].user + "</p>" +
+
+           '<img width="50" height="50" src= images/'+ info[i].propic+ ' >'+
           "<video id='video' class='postli'" + "style='background-color:"+ info[i].color +";'" + "width='230' height='150' controls>" +
             "<source src='videos/" + info[i].message + "'type='video/mp4'>" +
           "</video>" +
