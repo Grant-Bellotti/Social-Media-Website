@@ -207,20 +207,14 @@ router.post('/storeComment', function(req, res){
 let testComment =  
 `
 ${oldComment}
-<div>
+  <div>
   <p class="commentBlock" style="background-color:${color}">
   ${user}: 
   ${message}
   </p>
   <div>`
 
-  
- 
-  
-  //+ " <br> " + user + ": " + message + " <br> ";
-  //messageID++;
- // console.log(oldComment);
-   return(messageDb.postComment(id,testComment,res));
+  return(messageDb.postComment(id,testComment,res));
 
 });
 router.put('/updateMessagesPropic', function(req, res){

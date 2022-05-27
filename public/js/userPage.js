@@ -56,9 +56,15 @@ function commentit(id){
             data: {messageID:messageid},
             success: function(data2){
               postColor = data2.color
+              console.log(data2);
               let newComment =""
               if(data2.type == 'Text'){
                 newComment = 
+                `
+                <div>
+                <img src="images/${data2.propic}" height=100px width=100px>
+                </div>
+                `+
                 `<div class="userBlock" style="background-color:${postColor}">
                 <h1>
                 ${data2.message}
@@ -76,6 +82,11 @@ function commentit(id){
               }
               else if (data2.type == 'Image'){
                 newComment = 
+                `
+                <div>
+                <img src="images/${data2.propic}" height=100px width=100px>
+                </div>
+                `+
                 `<div class="userBlock" style="background-color:${postColor}">
                 User:${data2.user}
                 <img
@@ -92,13 +103,16 @@ function commentit(id){
               }
               else {
                 newComment = 
+                `
+                <div>
+                <img src="images/${data2.propic}" height=100px width=100px>
+                </div>
+                `+
                 `<div class="userBlock" style="background-color:${postColor}">
                 User:${data2.user}
                 <video width="auto" height="auto" controls>
                 <source src="videos/${data2.message}">
-
                 </video>
- 
                 </div>
                 <div>
                 Comments
@@ -107,8 +121,6 @@ function commentit(id){
                 </div>
                 `
               }
-
-
 
               $("#messages").append(
                 newComment
@@ -120,8 +132,6 @@ function commentit(id){
       } ,
       dataType: "json"
     });
-
-
       
     
 //Get message from server.

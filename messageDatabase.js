@@ -95,7 +95,9 @@ myDatabase.prototype.getData = function(id,res) {
                                         type:info[0].type,
                                         color:info[0].color,
                                         comments:info[0].comments,
-                                        realMessage:info[0].realMessage});
+                                        realMessage:info[0].realMessage,
+                                        propic:info[0].propic
+                                      });
 }
  else{
           return res.json({error:true});
@@ -142,59 +144,31 @@ myDatabase.prototype.getAllData = function(res) {
       let chat = "";
       let newmessageId;
     for(let i =0; i<info.length;i++) {
-
-             if(info[i].type == "Text") {
-              chat += (
-                `<div class="postBlock" id=${info[i].id}>` +
-                '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].user + ": " + info[i].message + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'+
-                '<div>' +
-                "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-                "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-                  + "<br>"
-                  +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-                  +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
-                  "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
-                +"</div>"
-                +"</div>"
-                +"</div>"
-                );
+        if(info[i].type == "Text") {
+        chat += (
+          `<div class="postBlock" id=${info[i].id}>` +
+          '<p class="postli" style="background-color:'+ info[i].color +';"' + `id=${info[i].id}>`  + info[i].user + ": " + info[i].message + '<br>'+'<body>'+info[i].realMessage+'</body>'+'</p>'
+          +"</div>"
+          );
       }
       else if(info[i].type == "Image") {
   
 
         chat += (
-          '<div class="postBlock">' +
+          `<div class="postBlock" id=${info[i].id}>` +
           `<p class='postli' style="background-color:${info[i].color};">` + info[i].user + 
-          "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150" width="150">' +"</p>" +
-          '<div>' +
-                "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-                "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-                  + "<br>"
-                  +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-                  +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
-                  "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
-                +"</div>"
-                +"</div>"
+          "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150px" width="150px">' +"</p>"
                 +"</div>"
           );
 
       }
       else if(info[i].type == "Video") {
         chat += (
-          "<div class='postBlock' >" +
+          `<div class="postBlock" id=${info[i].id}>` +
           "<p class='imageUser'>" + info[i].realMessage + ": " + info[i].user + "</p>" +
           "<video id='video' class='postli'" + "style='background-color:"+ info[i].color +";'" + "width='230' height='150' controls>" +
             "<source src='videos/" + info[i].message + "'type='video/mp4'>" +
-          "</video>" +
-          '<div>' +
-          "<button type=button id='" + info[i].id + "'class='collapsible' " + 'style="background-color:'+ info[i].color + ';">' + 'Comments</button>'+
-          "<div id =" + "d"+ info[i].id + " class="+ "content"+"> " +"<hr>"
-            + "<br>"
-            +"<input id =" + "t" + info[i].id + " type="+ "text"+">"
-            +"<input id =" + "c"+ info[i].id + " type=button name=commentb" +
-            "value=PostComment onclick= " + "commentit("+  info[i].id + ")>" +"<br>"
-          +"</div>"
-          +"</div>"
+          "</video>"
           +"</div>"
         );
       }
