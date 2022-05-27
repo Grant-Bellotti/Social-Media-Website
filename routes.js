@@ -178,15 +178,15 @@ router.post('/storeMessage', function(req, res){
   let comments = req.body.comments;
   let realMessage = req.body.realMessage.trim();
   let propic = req.body.propic.trim();
-  let yeetitle = req.body.yeetitle.trim();
+ // let yeetitle = req.body.yeetitle.trim();
  //let survey= req.body.survey.trim();
 
   if (message == "") {
       res.json({error:true,message:"Bad Message"});
       return;
   }
-
-  let obj = new MessageData(message,id,user,type,color,comments,realMessage,propic,yeetitle); //the -1 is temporary, is the yee rating
+  //let obj = new MessageData(message,id,user,type,color,comments,realMessage,propic,yeetitle); //the -1 is temporary, is the yee rating
+  let obj = new MessageData(message,id,user,type,color,comments,realMessage,propic); //the -1 is temporary, is the yee rating
   messageID = id + 1;
   return(messageDb.postData(obj,res));
 

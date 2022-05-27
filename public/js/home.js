@@ -33,7 +33,7 @@ socket.on('update', (data) => {
 if(data.type == "Text") {
   $("#messages").append(
     '<div class="postBlock">' +
-    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.msg + ": " + data.user + '<br>'+'<body>'+data.bodyMSG+'</body>'+
+    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.user + ": " + data.msg + '<br>'+'<body>'+data.bodyMSG+'</body>'+
     '<img width="50" height="50" src= images/'+ data.picture + ' >'+'</p>'+
     '<div>'+
     "<button type=button id ="+ messageid+ " class='collapsible' " + 'style="background-color:'+ data.color + ';">' + 'Comments</button>'+

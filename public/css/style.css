@@ -77,6 +77,7 @@ legend {
 ul{
   list-style-type: none;
 }
+
 .postli{
 display: inline-block;
 word-wrap: break-word;
@@ -89,6 +90,7 @@ background-color: #000000;
 padding: 10px;
 height: 150px;
 width: 150px;
+
 }
 
 .postli:hover{

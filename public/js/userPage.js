@@ -74,7 +74,7 @@ function commentit(id){
                 </div>
                 `
               }
-              else {
+              else if (data2.type == 'Image'){
                 newComment = 
                 `<div class="userBlock" style="background-color:${postColor}">
                 User:${data2.user}
@@ -90,6 +90,24 @@ function commentit(id){
                 </div>
                 `
               }
+              else {
+                newComment = 
+                `<div class="userBlock" style="background-color:${postColor}">
+                User:${data2.user}
+                <video width="auto" height="auto" controls>
+                <source src="videos/${data2.message}">
+
+                </video>
+ 
+                </div>
+                <div>
+                Comments
+                
+                ${data2.comments}
+                </div>
+                `
+              }
+
 
 
               $("#messages").append(
