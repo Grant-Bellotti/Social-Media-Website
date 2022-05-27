@@ -12,9 +12,7 @@ function submitClicked(){
         alert("you may need to select all the questions first");
       else {
         alert("your survey number is " + data.num);
-        location.href = "/profile";
-      }
-       $.ajax({
+         $.ajax({
         url: "/updateMessagesYT",
         type: "PUT",
         data: {yeetitle:data.title},
@@ -27,6 +25,9 @@ function submitClicked(){
         } ,
       dataType: "json"
         });
+        location.href = "/profile";
+      }
+      
     },
     dataType: "json"
   });
