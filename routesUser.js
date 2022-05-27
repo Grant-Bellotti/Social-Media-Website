@@ -100,6 +100,23 @@ router.put('/update', function(req, res){
 
 });
 
+router.put('/changePassword', function(req, res){
+  if (req.isAuthenticated()) {
+    let name = req.user.username;
+    let newPassword = req.body.newPassword.trim();
+    User.findOne({username:name}, function(err, user) {
+      if (err) {
+        res.json({error:true ,message: "error" });
+      }
+      if (user) {
+        return (user.changePassword(newPassword,name,User,res));
+      }
+    });
+  } else {
+    res.json({error:true});
+  }
+});
+
 router.post('/surveySubmit', function(req, res){
   if (req.isAuthenticated()) {
     let name = req.user.username;

@@ -59,11 +59,29 @@ $(document).ready(function(){
     if(data.yeetitle != "A") {
       $("#yeetitle").html("Yee Title: " + data.yeetitle);
       }
-    
+
 
   });
 
+////////////////////////////////////////////////////////////////////////////
+
   $("form").submit(function(event) {
+    if($("#newPassword").val().trim()) {
+      $.ajax({
+        url: "/changePassword",
+        type: "PUT",
+        data: {newPassword:$("#newPassword").val()},
+        success: function(data){
+          if(data.error) {
+            alert(data.message);
+          } else {
+            $("#newPassword").val("");
+          }
+        } ,
+      dataType: "json"
+      });
+    }
+
     let data = new FormData($(this)[0]);
     $.ajax({
       url: '/fileupload',

@@ -39,6 +39,19 @@ userSchema.methods.checkPassword = function(guess, done) {
   });
 };
 
+userSchema.methods.changePassword = function(newPassword,name,User,res) {
+  bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+    if (err) { res.json({error:true ,message: "error" }); }
+    bcrypt.hash(newPassword, salt, noop, function(err, hashedPassword) {
+      if (err) { res.json({error:true ,message: "error" }); }
+      User.findOneAndUpdate({username:name},{password:hashedPassword}, function(err, user) {
+        if (err) { res.json({error:true ,message: "error" }); }
+        res.json({error:false ,message: "account password updated" });
+      });
+    });
+  });
+};
+
 userSchema.methods.name = function() {
   return this.displayName || this.username;
 };
