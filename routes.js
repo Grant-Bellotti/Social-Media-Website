@@ -71,14 +71,7 @@ router.get("/survey",function(req,res){
     res.sendFile(thePath);
   }
 });
-/*
-router.get("/yeeside",function(req,res){
-  res.sendFile(path.resolve(__dirname + "/public/views/yeelogin.html"));  //changed
-});
-router.get("/yeeview",function(req,res){
-  res.sendFile(path.resolve(__dirname + "/public/views/yeeview.html"));  //changed
-});
-*/
+
 router.get("/userInfo",function(req,res){
   if (req.isAuthenticated()) {
     console.log("req isAuthenticated");
@@ -121,18 +114,18 @@ let filename2;
 
 //////////////////////////////////
 let thisPost;
-router.get("/userPage",function(req,res){  
+router.get("/userPage",function(req,res){
   res.sendFile(path.resolve(__dirname + "/public/views/userPage.html"));  //changed
 });
 
 router.post("/userPage",function(req,res){
   thisPost = req.body.PostID;
-  res.json({});  
+  res.json({});
 });
 
 router.get("/getPostID",function(req,res){
   console.log(thisPost);
-  res.json({ID:thisPost});  
+  res.json({ID:thisPost});
 });
 
 
@@ -204,12 +197,12 @@ router.post('/storeComment', function(req, res){
       return;
   }
 
-let testComment =  
+let testComment =
 `
 ${oldComment}
   <div>
   <p class="commentBlock" style="background-color:${color}">
-  ${user}: 
+  ${user}:
   ${message}
   </p>
   <div>`

@@ -10,6 +10,16 @@ function logoutClicked(){
   return false;
 }
 
+function showPassword() {
+  var input = document.getElementById("newPassword");
+  if (input.type === "password") {
+    input.type = "text";
+  }
+  else {
+    input.type = "password";
+  }
+}
+
 function uploadSuccess(data) {
   if (action == "Update") {
     $.get("/getInfo",function(info){

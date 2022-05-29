@@ -32,7 +32,7 @@ socket.on('update', (data) => {
 if(data.type == "Text") {
   $("#messages").append(
     `<div class="postBlock" id=${data.id}>` +
-    '<p class="postli" style="background-color:'+ data.color +';">' + data.yeetitle + " " + data.user + ": " + data.msg + '<br>'+'<body>'+data.bodyMSG+'</body>'
+    '<p class="postli" style="background-color:'+ data.color +';">' + data.user + ": " + data.msg + '<br>'+'<body>'+data.bodyMSG+'</body>'
     +'</p>'
       +"</div>"
   );
@@ -40,22 +40,21 @@ if(data.type == "Text") {
 else if(data.type == "Image") {
   $("#messages").append(
     `<div class="postBlock" id=${data.id}>` +
-    `<p class='postli' style="background-color:${data.color};">` + data.user + 
+    `<p class='postli' style="background-color:${data.color};">`+ data.user + ": " +  data.bodyMSG +
     "<img id='display' class='postli'" + 'style="background-color:'+ data.color +';" src="images/' + data.msg +'"height="100" width="100">' +"</p>"
      +"</div>"
   );
 }
 else if(data.type == "Video") {
   $("#messages").append(
+
     `<div class="postBlock" id=${data.id}>` +
+    `<p class='postli' style="background-color:${data.color};">`+ data.user + ": " +  data.bodyMSG +
+    "<video id='video'" + "style='background-color:"+ data.color +";'" + "width='150' height='90' controls>" +
+    "<source src='videos/" + data.msg + "'type='video/mp4'>" +
+    "</video>" +"</p>"
+     +"</div>"
 
-    '<img width="50" height="50" src= images/'+ data.picture + ' >'+
-    "<p class='imageUser'>" + data.bodyMSG+ ": " + data.user + "</p>" +
-
-    "<video id='video' class='postli'" + "style='background-color:"+ data.color +";'" + "width='100' height='100' controls>" +
-      "<source src='videos/" + data.msg + "'type='video/mp4'>" +
-    "</video>"
-      +"</div>"
   );
 }
 
@@ -168,7 +167,7 @@ function uploadSuccess(data) {
         }
       }
 
-      
+
           $.ajax({
           url: "/getInfo",
           type: "GET",
@@ -187,7 +186,7 @@ function uploadSuccess(data) {
           } ,
           dataType: "json"
           });
-    
+
       $('#postT').val("");
       $('#postC').val("");
       $('#uploader').val("");
@@ -244,7 +243,7 @@ function collapseIt(messageID){
     });
 
   });
-  
+
 }
 
 function showPassword() {

@@ -41,7 +41,7 @@ myDatabase.prototype.postData = function(_data,res) {
 }
 myDatabase.prototype.postComment = function(id,comment,res) {
  DataModel.findOneAndUpdate({id:id},{comments:comment},function(error,oldData) {
-    
+
     if (error) {
       return res.json({error:true});
     }
@@ -96,7 +96,8 @@ myDatabase.prototype.getData = function(id,res) {
                                         color:info[0].color,
                                         comments:info[0].comments,
                                         realMessage:info[0].realMessage,
-                                        propic:info[0].propic
+                                        propic:info[0].propic,
+                                        yeetitle:info[0].yeetitle
                                       });
 }
  else{
@@ -152,11 +153,11 @@ myDatabase.prototype.getAllData = function(res) {
           );
       }
       else if(info[i].type == "Image") {
-  
+
 
         chat += (
           `<div class="postBlock" id=${info[i].id}>` +
-          `<p class='postli' style="background-color:${info[i].color};">` + info[i].user + 
+          `<p class='postli' style="background-color:${info[i].color};">` + info[i].user + ": " + info[i].realMessage +
           "<img id='display' class='postli'" + 'style="background-color:'+ info[i].color +';" src="images/' + info[i].message +'"height="150px" width="150px">' +"</p>"
                 +"</div>"
           );
@@ -165,11 +166,12 @@ myDatabase.prototype.getAllData = function(res) {
       else if(info[i].type == "Video") {
         chat += (
           `<div class="postBlock" id=${info[i].id}>` +
-          "<p class='imageUser'>" + info[i].realMessage + ": " + info[i].user + "</p>" +
-          "<video id='video' class='postli'" + "style='background-color:"+ info[i].color +";'" + "width='230' height='150' controls>" +
-            "<source src='videos/" + info[i].message + "'type='video/mp4'>" +
-          "</video>"
-          +"</div>"
+          `<p class='postli' style="background-color:${info[i].color};">`+ info[i].user + ": " +  info[i].realMessage +
+          "<video id='video'" + "style='background-color:"+ info[i].color +";'" + "width='150' height='90' controls>" +
+          "<source src='videos/" + info[i].message + "'type='video/mp4'>" +
+          "</video>" +"</p>"
+           +"</div>"
+
         );
       }
       newmessageId = info[i].id;

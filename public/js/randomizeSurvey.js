@@ -21,7 +21,7 @@ let answers = [
                ["<input type=radio id=1 name=q2 value=0140304413>" + "<label for=q2>Toyota</label>",
                 "<input type=radio id=2 name=q2 value=4130204011>" + "<label for=q2>Mercedes</label>",
                 "<input type=radio id=3 name=q2 value=0131300011>" + "<label for=q2>Honda</label>",
-                "<input type=radio id=4 name=q2 value=0430344021>" + "<label for=q2>Fiat</label>"],
+                "<input type=radio id=4 name=q2 value=0430344021>" + "<label for=q2>Mini Cooper</label>"],
 
                ["<input type=radio id=1 name=q3 value=4440204011>" + "<label for=q3>Fred</label>",
                 "<input type=radio id=2 name=q3 value=0130304413>" + "<label for=q3>Mr Yee's twin</label>",
@@ -38,10 +38,10 @@ let answers = [
                 "<input type=radio id=3 name=q5 value=0140300013>" + "<label for=q5>Game Programming</label>",
                 "<input type=radio id=4 name=q5 value=4131344021>" + "<label for=q5>Web Programming</label>"],
 
-               ["<input type=radio id=1 name=q6 value=4140304411>" + "<label for=q6>Koala</label>",
+               ["<input type=radio id=1 name=q6 value=4140304411>" + "<label for=q6>Dog</label>",
                 "<input type=radio id=2 name=q6 value=0430204011>" + "<label for=q6>Lion</label>",
                 "<input type=radio id=3 name=q6 value=0131300013>" + "<label for=q6>Elephant</label>",
-                "<input type=radio id=4 name=q6 value=0130344021>" + "<label for=q6>Dog</label>"],
+                "<input type=radio id=4 name=q6 value=0130344021>" + "<label for=q6>Koala</label>"],
 
                ["<input type=radio id=1 name=q7 value=0130300413>" + "<label for=q7>Ann</label>",
                 "<input type=radio id=2 name=q7 value=0131304021>" + "<label for=q7>Jojo</label>",

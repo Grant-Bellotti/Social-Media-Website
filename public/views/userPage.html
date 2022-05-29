@@ -12,14 +12,17 @@
   </head>
   <body>
     <ul id="NAVul">
-    <li id='NAVli'><a  href="/">Home</a></li>
-    <li id='NAVli'><a class="active" href="/profile">Profile</a></li>
-    <!-- <li id='NAVli'><a href="/survey">Survey</a></li> -->
+    <li id='NAVli'><a class="active" href="/">Home</a></li>
+    <li id='NAVli'><a href="/profile">Profile</a></li>
+    <li id='NAVli'><a href="/survey">Survey</a></li>
+    <div class="Login">
+      <h1 id="session"><a href="/profile">Login</a> </h1>
+    </div>
     </ul>
 
     <div>
-      <input type="text" id="commentBox" value="" >
-      <input class="button" type="button" id="addComment" value="Comment" onclick="commentit()">
+      <h1 class= "userStuff" id="userInfo"></h1>
+      <img id="display" class="imageStuff" src="images/empty.webp" alt="">
     </div>
     <ul id='messages'></ul>
     <script src='/socket.io/socket.io.js'></script>

@@ -135,6 +135,23 @@ width: 150px;
   font-size:9px;
   margin-right:1%;
 }
+.imageStuff{
+  position: absolute;
+  top: 6%;
+  right: 94%;
+  width: 20%;
+  height: 20%;
+}
+.userStuff{
+  text-align: left;
+  padding-left: 7%;
+}
+.commentStuff{
+  text-align: center;
+  font-size:36px;
+  font-weight: bold ;
+  color: white;
+}
 #NAVul {
   font-weight: bold;
   font-family: Helvetica,Arial, sans-serif;
@@ -173,11 +190,20 @@ li a.active {
   width: 100%;
   background-color: #000000;
   color: white;
-  height: 50px;
-  text-align: center;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: larger;
 }
-
+.textC{
+  height:max-content;
+  width: 50%;
+  height: 20px;
+  border-style: solid;
+  border-color: black;
+  font-size:24px;
+}
 ul{
   padding-left: 0px;
 }
