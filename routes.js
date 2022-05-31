@@ -200,11 +200,11 @@ router.post('/storeComment', function(req, res){
 let testComment =
 `
 ${oldComment}
-  <div>
-  <p class="commentBlock" style="background-color:${color}">
+  <div >
+  <div class="commentStuff commentBlock" style="background-color:${color}">
   ${user}:
   ${message}
-  </p>
+  </div>
   <div>`
 
   return(messageDb.postComment(id,testComment,res));

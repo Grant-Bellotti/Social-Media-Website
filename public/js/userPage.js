@@ -33,10 +33,12 @@ socket.on('welcome', function(data) {
             ${data2.realMessage}
             </p>
             </div>
-            <div class='commentStuff' style="background-color:${postColor}">Comments
+            <div  id="test" style="background-color:${postColor};  text-align: center;
+            font-size:36px;
+            font-weight: bold ;
+            color: white;">Comments
               <br> <input type="text" class="textC" id="commentBox" value="" >
               <input class="button" type="button" id="addComment" value="Comment" onclick="commentit()">
-              </div><div>
             ${data2.comments}
             </div>
             `
@@ -89,19 +91,38 @@ socket.on('welcome', function(data) {
 
 socket.on('updateComments', function(data) {
   if(messageid==data.messageID){
-    $("#messages").append(
-      `<div>
-      <p class="commentBlock" style="background-color:${postColor}">
+
+    /*
+      <div >
+      <div class="commentStuff commentBlock" style="background-color:${color}">
+      ${user}:
+      ${message}
+      </div>
+      <div>
+    */
+
+    $("#test").append(
+
+      `
+      <div class="commentStuff commentBlock" style="background-color:${data.color}">
       ${data.user}:
       ${data.text}
-      </p>
-      <div>
-      `)
+      </div>
+      `
+      /*
+      `
+      <br>
+      //${data.user}:
+      ${data.text} 
+      
+      `
+      */
+      )
   }
 });
 
 function commentit(id){
-  let text = $("#commentBox").val();
+  let text = $("#commentBox").val()+"<br>";
   if(text != "") {
     $.get("/checkAuthenticated",function(info){
       if(info.error) {
@@ -109,6 +130,7 @@ function commentit(id){
         return false;
       } else {
         let user = info.user;
+        let postColor;
         $.ajax({
           url: "/getData",
           type: "GET",
@@ -125,11 +147,12 @@ function commentit(id){
               } ,
               dataType: "json"
             });
+            socket.emit("updateComments",{"text":text,"messageID":messageid,"user":user,"color":postColor})
+
           } ,
           dataType: "json"
         });
 
-       socket.emit("updateComments",{"text":text,"messageID":messageid,"user":user})
        $("#commentBox").val("");
       }
     });
