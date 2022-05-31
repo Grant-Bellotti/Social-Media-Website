@@ -37,7 +37,7 @@ socket.on('welcome', function(data) {
             font-size:36px;
             font-weight: bold ;
             color: white;">Comments
-              <br> <input type="text" class="textC" id="commentBox" value="" >
+              <br> <input type="text" class="textC" id="commentBox" maxlength="1000" value="" >
               <input class="button" type="button" id="addComment" value="Comment" onclick="commentit()">
             ${data2.comments}
             </div>
@@ -49,10 +49,12 @@ socket.on('welcome', function(data) {
             <h1> ${data2.realMessage}`+ ":" + ` </h1>
             <img style="background-color:${postColor}" src="images/${data2.message}" width="60%">
             </div>
-            <div class='commentStuff' style="background-color:${postColor}">Comments
-              <br> <input type="text" class="textC" id="commentBox" value="" >
+            <div  id="test" style="background-color:${postColor};  text-align: center;
+            font-size:36px;
+            font-weight: bold ;
+            color: white;">Comments
+              <br> <input type="text" class="textC" id="commentBox" maxlength="1000" value="" >
               <input class="button" type="button" id="addComment" value="Comment" onclick="commentit()">
-              </div><div>
             ${data2.comments}
             </div>
             `
@@ -65,10 +67,12 @@ socket.on('welcome', function(data) {
             <source src="videos/${data2.message}">
             </video>
             </div>
-            <div class='commentStuff' style="background-color:${postColor}">Comments
-              <br> <input type="text" class="textC" id="commentBox" value="" >
+            <div  id="test" style="background-color:${postColor};  text-align: center;
+            font-size:36px;
+            font-weight: bold ;
+            color: white;">Comments
+              <br> <input type="text" class="textC" id="commentBox" maxlength="1000" value="" >
               <input class="button" type="button" id="addComment" value="Comment" onclick="commentit()">
-              </div><div>
             ${data2.comments}
             </div>
             `
@@ -91,16 +95,6 @@ socket.on('welcome', function(data) {
 
 socket.on('updateComments', function(data) {
   if(messageid==data.messageID){
-
-    /*
-      <div >
-      <div class="commentStuff commentBlock" style="background-color:${color}">
-      ${user}:
-      ${message}
-      </div>
-      <div>
-    */
-
     $("#test").append(
 
       `
@@ -109,14 +103,6 @@ socket.on('updateComments', function(data) {
       ${data.text}
       </div>
       `
-      /*
-      `
-      <br>
-      //${data.user}:
-      ${data.text} 
-      
-      `
-      */
       )
   }
 });
