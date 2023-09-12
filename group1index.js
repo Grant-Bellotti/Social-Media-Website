@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/group1db");
+mongoose.connect('mongodb://localhost/group1db',{useMongoClient:true});
 //mongoose.connect("mongodb://localhost:27017/group1db"); //change localhost to 127.0.0.1
 setUpPassport();
 
